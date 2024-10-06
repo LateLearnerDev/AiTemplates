@@ -1,5 +1,4 @@
-using Application.Interfaces;
-using Application.Services;
+using Application;
 using Domain.Interfaces;
 using Infrastructure;
 using Infrastructure.Repositories;
@@ -17,17 +16,18 @@ builder.Services.AddCors(options =>
     });
 });
 
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.PropertyNamingPolicy = null;
+    });
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// builder.Services.AddDbContext<AiTemplatesDbContext>(options =>
-//     options.UseMySQL(builder.Configuration.GetConnectionString("DefaultConnection") ?? string.Empty));
-
 builder.Services.AddDbContext<AiTemplatesDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("PostgresConnection")));
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(ApplicationAssembly).Assembly));
 
-builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 
 var app = builder.Build();

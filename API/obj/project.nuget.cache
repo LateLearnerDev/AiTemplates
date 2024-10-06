@@ -1,14 +1,17 @@
 {
   "version": 2,
-  "dgSpecHash": "uvm508PACwA3I405nHabEUUOfAbCAZYMQSknPiBltl4jDCJinMrtE4zquEV5sFTnyzyvqN4PLpXgSBoWijAr3w==",
+  "dgSpecHash": "TdquoakuaHRJr6XRqxt+zGf4iC/Sw3r3lgHHzsWAYM3JvOQxQCE6xd1ZB3MCm+9y/TuebH75ZUHTy4ujUyAddA==",
   "success": true,
   "projectFilePath": "C:\\Users\\rlpov\\projects\\AiTemplates\\API\\API.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\rlpov\\.nuget\\packages\\bouncycastle.cryptography\\2.3.1\\bouncycastle.cryptography.2.3.1.nupkg.sha512",
+    "C:\\Users\\rlpov\\.nuget\\packages\\communitytoolkit.diagnostics\\8.3.2\\communitytoolkit.diagnostics.8.3.2.nupkg.sha512",
     "C:\\Users\\rlpov\\.nuget\\packages\\google.protobuf\\3.26.1\\google.protobuf.3.26.1.nupkg.sha512",
     "C:\\Users\\rlpov\\.nuget\\packages\\k4os.compression.lz4\\1.3.8\\k4os.compression.lz4.1.3.8.nupkg.sha512",
     "C:\\Users\\rlpov\\.nuget\\packages\\k4os.compression.lz4.streams\\1.3.8\\k4os.compression.lz4.streams.1.3.8.nupkg.sha512",
     "C:\\Users\\rlpov\\.nuget\\packages\\k4os.hash.xxhash\\1.0.8\\k4os.hash.xxhash.1.0.8.nupkg.sha512",
+    "C:\\Users\\rlpov\\.nuget\\packages\\mediatr\\12.4.1\\mediatr.12.4.1.nupkg.sha512",
+    "C:\\Users\\rlpov\\.nuget\\packages\\mediatr.contracts\\2.0.1\\mediatr.contracts.2.0.1.nupkg.sha512",
     "C:\\Users\\rlpov\\.nuget\\packages\\microsoft.aspnetcore.openapi\\8.0.6\\microsoft.aspnetcore.openapi.8.0.6.nupkg.sha512",
     "C:\\Users\\rlpov\\.nuget\\packages\\microsoft.entityframeworkcore\\8.0.8\\microsoft.entityframeworkcore.8.0.8.nupkg.sha512",
     "C:\\Users\\rlpov\\.nuget\\packages\\microsoft.entityframeworkcore.abstractions\\8.0.8\\microsoft.entityframeworkcore.abstractions.8.0.8.nupkg.sha512",

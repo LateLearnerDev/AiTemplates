@@ -16,10 +16,11 @@ public class ProductRepository(AiTemplatesDbContext context) : IProductRepositor
         return await context.Products.FirstOrDefaultAsync(p => p.Id == id);
     }
 
-    public async Task AddProductAsync(Product product)
+    public async Task<Guid> AddProductAsync(Product product)
     {
-        await context.Products.AddAsync(product);
+        var addedItem = await context.Products.AddAsync(product);
         await context.SaveChangesAsync();
+        return addedItem.Entity.Id;
     }
     
     public async Task UpdateProductAsync(Product product)

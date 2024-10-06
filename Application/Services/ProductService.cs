@@ -6,6 +6,11 @@ namespace Application.Services;
 
 public class ProductService(IProductRepository productRepository) : IProductService
 {
+    public async Task<IEnumerable<Product>> GetProductsAsync()
+    {
+        return await productRepository.GetProductsAsync();
+    }
+    
     public async Task<Product?> GetProductByIdAsync(Guid id)
     {
         return await productRepository.GetProductByIdAsync(id);

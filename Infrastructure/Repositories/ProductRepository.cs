@@ -6,6 +6,11 @@ namespace Infrastructure.Repositories;
 
 public class ProductRepository(AiTemplatesDbContext context) : IProductRepository
 {
+    public async Task<IEnumerable<Product>> GetProductsAsync()
+    {
+        return await context.Products.ToListAsync();
+    }
+    
     public async Task<Product?> GetProductByIdAsync(Guid id)
     {
         return await context.Products.FirstOrDefaultAsync(p => p.Id == id);

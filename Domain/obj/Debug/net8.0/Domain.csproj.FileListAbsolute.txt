@@ -5,6 +5,7 @@ C:\Users\rlpov\projects\AiTemplates\Domain\obj\Debug\net8.0\Domain.GeneratedMSBu
 C:\Users\rlpov\projects\AiTemplates\Domain\obj\Debug\net8.0\Domain.AssemblyInfoInputs.cache
 C:\Users\rlpov\projects\AiTemplates\Domain\obj\Debug\net8.0\Domain.AssemblyInfo.cs
 C:\Users\rlpov\projects\AiTemplates\Domain\obj\Debug\net8.0\Domain.csproj.CoreCompileInputs.cache
+C:\Users\rlpov\projects\AiTemplates\Domain\obj\Debug\net8.0\Domain.sourcelink.json
 C:\Users\rlpov\projects\AiTemplates\Domain\obj\Debug\net8.0\Domain.dll
 C:\Users\rlpov\projects\AiTemplates\Domain\obj\Debug\net8.0\refint\Domain.dll
 C:\Users\rlpov\projects\AiTemplates\Domain\obj\Debug\net8.0\Domain.pdb

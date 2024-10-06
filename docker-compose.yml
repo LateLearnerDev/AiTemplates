@@ -1,18 +1,4 @@
-﻿#services:
-#  mysql:
-#    image: mysql:8
-#    environment:
-#      MYSQL_ROOT_PASSWORD: rootpassword
-#      MYSQL_DATABASE: myappdb
-#      MYSQL_USER: admin
-#      MYSQL_PASSWORD: password
-#    ports:
-#      - "3306:3306"
-#    volumes:
-#      - mysql_data:/var/lib/mysql
-#volumes:
-#  mysql_data:
-services:
+﻿services:
   postgres:
     image: postgres:13
     environment:
@@ -20,28 +6,9 @@ services:
       POSTGRES_PASSWORD: password
       POSTGRES_DB: myappdb
     ports:
-      - "5432:5432"
+      - "5432:5432"  # Map local port 5432 to the container port 5432
     volumes:
-      - postgres_data:/var/lib/postgresql/data
-      
-  api:
-    build:
-      context: .
-      dockerfile: API/Dockerfile
-    ports:
-      - "5000:80"  # Expose port 80 inside the container as port 5000 on the host
-    depends_on:
-      - postgres  # Ensure MySQL starts before the API      
-  
-  client:
-    build:
-      context: ./ClientApp
-      dockerfile: Dockerfile
-    ports:
-      - "3000:80"  # Expose port 80 inside the container as port 3000 on the host
-    depends_on:
-      - api  # Ensure the API is up before serving the front-end
+      - postgres_data:/var/lib/postgresql/data  # Persist data across restarts
 
 volumes:
   postgres_data:
-    

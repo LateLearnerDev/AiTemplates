@@ -1,3 +1,6 @@
+C:\Users\rlpov\projects\AiTemplates\API\bin\Debug\net8.0\Infrastructure.deps.json
+C:\Users\rlpov\projects\AiTemplates\API\bin\Debug\net8.0\Infrastructure.runtimeconfig.json
+C:\Users\rlpov\projects\AiTemplates\API\bin\Debug\net8.0\Infrastructure.exe
 C:\Users\rlpov\projects\AiTemplates\API\bin\Debug\net8.0\appsettings.Development.json
 C:\Users\rlpov\projects\AiTemplates\API\bin\Debug\net8.0\appsettings.json
 C:\Users\rlpov\projects\AiTemplates\API\bin\Debug\net8.0\API.exe
@@ -17,6 +20,8 @@ C:\Users\rlpov\projects\AiTemplates\API\bin\Debug\net8.0\Microsoft.EntityFramewo
 C:\Users\rlpov\projects\AiTemplates\API\bin\Debug\net8.0\Microsoft.OpenApi.dll
 C:\Users\rlpov\projects\AiTemplates\API\bin\Debug\net8.0\MySql.Data.dll
 C:\Users\rlpov\projects\AiTemplates\API\bin\Debug\net8.0\MySql.EntityFrameworkCore.dll
+C:\Users\rlpov\projects\AiTemplates\API\bin\Debug\net8.0\Npgsql.dll
+C:\Users\rlpov\projects\AiTemplates\API\bin\Debug\net8.0\Npgsql.EntityFrameworkCore.PostgreSQL.dll
 C:\Users\rlpov\projects\AiTemplates\API\bin\Debug\net8.0\Swashbuckle.AspNetCore.Swagger.dll
 C:\Users\rlpov\projects\AiTemplates\API\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerGen.dll
 C:\Users\rlpov\projects\AiTemplates\API\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerUI.dll
@@ -44,6 +49,7 @@ C:\Users\rlpov\projects\AiTemplates\API\obj\Debug\net8.0\API.AssemblyInfo.cs
 C:\Users\rlpov\projects\AiTemplates\API\obj\Debug\net8.0\API.csproj.CoreCompileInputs.cache
 C:\Users\rlpov\projects\AiTemplates\API\obj\Debug\net8.0\API.MvcApplicationPartsAssemblyInfo.cs
 C:\Users\rlpov\projects\AiTemplates\API\obj\Debug\net8.0\API.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\rlpov\projects\AiTemplates\API\obj\Debug\net8.0\API.sourcelink.json
 C:\Users\rlpov\projects\AiTemplates\API\obj\Debug\net8.0\staticwebassets.build.json
 C:\Users\rlpov\projects\AiTemplates\API\obj\Debug\net8.0\staticwebassets.development.json
 C:\Users\rlpov\projects\AiTemplates\API\obj\Debug\net8.0\staticwebassets\msbuild.API.Microsoft.AspNetCore.StaticWebAssets.props

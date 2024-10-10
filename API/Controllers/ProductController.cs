@@ -1,41 +1,46 @@
-using Application.Interfaces;
+using Application.Products.Models;
+using Application.Products.Requests;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class ProductController(IProductService productService) : ControllerBase
+public class ProductController(ISender sender) : ControllerBase
 {
     [HttpGet]
     public async Task<IActionResult> GetProducts()
     {
-        var products = await productService.GetProductsAsync();
+        var products = await sender.Send(new GetProductsRequest());
         return Ok(products);
     }
     
     [HttpGet("{id}")]
     public async Task<IActionResult> GetProductById(Guid id)
     {
-        var product = await productService.GetProductByIdAsync(id);
-        if (product == null)
+        var product = await sender.Send(new GetProductByIdRequest
         {
-            return NotFound();
-        }
+            Id = id
+        });
         return Ok(product);
     }
 
     [HttpPost]
-    public async Task<IActionResult> AddProduct(string name, decimal price)
+    public async Task<IActionResult> AddProduct([FromBody] AddProductPro pro)
     {
-        await productService.AddProductAsync(name, price);
-        return Ok();
+        var productId = await sender.Send(new AddProductRequest
+        {
+            Name = pro.Name,
+            Price = pro.Price
+        });
+        return Ok(productId);
     }
 
-    [HttpPut("{id}")]
-    public async Task<IActionResult> UpdateProduct(Guid id, decimal newPrice)
-    {
-        await productService.UpdateProductAsync(id, newPrice);
-        return Ok();
-    }
+    // [HttpPut("{id}")]
+    // public async Task<IActionResult> UpdateProduct(Guid id, decimal newPrice)
+    // {
+    //     await productService.UpdateProductAsync(id, newPrice);
+    //     return Ok();
+    // }
 }

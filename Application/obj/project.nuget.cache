@@ -1,8 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "/Q2lyuC4EpuXjMCzi5PeVCwwgjo8Qq+aq2k4lTOZnJG9ZcXc5yeFasyKcECUp+xEuMlh3P6aASeEhzyW2up59w==",
+  "dgSpecHash": "ud7Ke6DXasDZ+BYUilv7KPQZswAROywptEIm/vVwfeoHHkAGdxT/8NQSwQGUgNQfMByxs6I5YMpbgTwKQSWYkw==",
   "success": true,
   "projectFilePath": "C:\\Users\\rlpov\\projects\\AiTemplates\\Application\\Application.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\rlpov\\.nuget\\packages\\communitytoolkit.diagnostics\\8.3.2\\communitytoolkit.diagnostics.8.3.2.nupkg.sha512",
+    "C:\\Users\\rlpov\\.nuget\\packages\\mediatr\\12.4.1\\mediatr.12.4.1.nupkg.sha512",
+    "C:\\Users\\rlpov\\.nuget\\packages\\mediatr.contracts\\2.0.1\\mediatr.contracts.2.0.1.nupkg.sha512",
+    "C:\\Users\\rlpov\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\8.0.0\\microsoft.extensions.dependencyinjection.abstractions.8.0.0.nupkg.sha512"
+  ],
   "logs": []
 }

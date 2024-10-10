@@ -1,6 +1,7 @@
 import './App.css'
 import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
 import ProductList from "./components/ProductList.tsx";
+import AddProduct from "./components/AddProduct.tsx";
 
 function App() {
     const queryClient = new QueryClient();
@@ -31,6 +32,7 @@ function App() {
             <div>
                 <h1>Product List with React Query</h1>
                 <ProductList/>
+                <AddProduct/>
             </div>
         </QueryClientProvider>
     )

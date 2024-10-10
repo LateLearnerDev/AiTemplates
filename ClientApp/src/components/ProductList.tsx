@@ -1,22 +1,18 @@
-import axios from 'axios';
-import {useQuery} from "@tanstack/react-query";
-import {IProduct} from "../models/IProduct.ts";
-import {useEffect} from "react";
+import {FC, useEffect} from "react";
+import {useProductQuery} from "../data/hooks/useProductsQuery.ts";
 
-// Trying to access environment variables 
-const apiBaseUrl = import.meta.env.VITE_REACT_APP_API_URL;
 
-const fetchProducts = async () => {
-    const response = await axios.get<IProduct[]>(`${apiBaseUrl}/api/product`);
-    return response.data;
-};
 
-const ProductList = () => {
-    const { data: products, error, isLoading } = useQuery({queryKey: ["products"], queryFn: fetchProducts});
-
+const ProductList: FC = () => {
+    const {data: products, isLoading, error} = useProductQuery();
+    
     useEffect(() => {
         console.log(import.meta.env.VITE_REACT_APP_API_URL);
     }, []);
+
+    useEffect(() => {
+        console.log({data: products})
+    }, [products]);
     
     if (isLoading) return <p>Loading...</p>;
     if (error) return <p>Error loading products: {error.message}</p>;

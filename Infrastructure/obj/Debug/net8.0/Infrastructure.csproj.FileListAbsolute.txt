@@ -129,3 +129,6 @@ C:\Users\rlpov\projects\AiTemplates\Infrastructure\obj\Debug\net8.0\refint\Infra
 C:\Users\rlpov\projects\AiTemplates\Infrastructure\obj\Debug\net8.0\Infrastructure.pdb
 C:\Users\rlpov\projects\AiTemplates\Infrastructure\obj\Debug\net8.0\Infrastructure.genruntimeconfig.cache
 C:\Users\rlpov\projects\AiTemplates\Infrastructure\obj\Debug\net8.0\ref\Infrastructure.dll
+C:\Users\rlpov\projects\AiTemplates\Infrastructure\bin\Debug\net8.0\CommunityToolkit.Diagnostics.dll
+C:\Users\rlpov\projects\AiTemplates\Infrastructure\bin\Debug\net8.0\MediatR.dll
+C:\Users\rlpov\projects\AiTemplates\Infrastructure\bin\Debug\net8.0\MediatR.Contracts.dll

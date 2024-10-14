@@ -13,4 +13,8 @@ public class WorkoutExercise
 
     public int ExerciseId { get; set; }
     [ForeignKey(nameof(ExerciseId))] public Exercise Exercise { get; set; } = default!;
+    
+    public int? GymEquipmentId { get; set; }
+    [ForeignKey(nameof(GymEquipmentId))]
+    public GymEquipment? GymEquipment { get; set; }
 }

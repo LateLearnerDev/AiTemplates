@@ -5,21 +5,11 @@ namespace Infrastructure;
 
 public class AiTemplatesDbContext(DbContextOptions<AiTemplatesDbContext> options) : DbContext(options)
 {
-    public DbSet<Product> Products { get; set; }
-    public DbSet<Cycle> Cycles { get; set; }
-    public DbSet<GymEquipment> GymEquipments { get; set; }
-    public DbSet<GymEquipmentExercise> GymEquipmentExercises { get; set; }
-    public DbSet<Exercise> Exercises { get; set; }
-    public DbSet<Gym> Gyms { get; set; }
-    public DbSet<LoginDetails> LoginDetails { get; set; }
-    public DbSet<User> Users { get; set; }
-    public DbSet<Workout> Workouts { get; set; }
-    public DbSet<WorkoutExercise> WorkoutExercises { get; set; }
-    public DbSet<WorkoutExerciseSet> WorkoutExerciseSets { get; set; }
-
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
+        
+        modelBuilder.ApplyConfigurationsFromAssembly(GetType().Assembly);
 
         // Seed Gyms
         modelBuilder.Entity<Gym>().HasData(
@@ -27,7 +17,7 @@ public class AiTemplatesDbContext(DbContextOptions<AiTemplatesDbContext> options
             new Gym { Id = 2, Name = "Fitness World" },
             new Gym { Id = 3, Name = "Elite Performance" }
         );
-
+        
         // Seed Exercises
         modelBuilder.Entity<Exercise>().HasData(
             new Exercise { Id = 1, Name = "Incline Bench Press", Description = "Upper chest exercise" },
@@ -41,7 +31,7 @@ public class AiTemplatesDbContext(DbContextOptions<AiTemplatesDbContext> options
             new Exercise { Id = 9, Name = "Lat Pull Down", Description = "Back Exercise" },
             new Exercise { Id = 10, Name = "Bicep Curl", Description = "Bicep Exercise" }
         );
-
+        
         // Seed Equipment
         modelBuilder.Entity<GymEquipment>().HasData(
             new GymEquipment { Id = 1, Name = "Incline Bench Press Machine", GymId = 1},
@@ -68,13 +58,13 @@ public class AiTemplatesDbContext(DbContextOptions<AiTemplatesDbContext> options
             // Pull-Up Bar at Elite Performance for Pull-Up
             new GymEquipmentExercise { Id = 6, GymEquipmentId = 8, ExerciseId = 4 }   // Pull-Up Bar + Pull-Up
         );
-
+        
         // Seed Users
         modelBuilder.Entity<User>().HasData(
-            new User { Id = 1, FirstName = "John", LastNameName = "Doe", LoginId = null },
-            new User { Id = 2, FirstName = "Jane", LastNameName = "Smith", LoginId = null }
+            new User { Id = 1, FirstName = "John", LastName = "Doe", LoginId = null },
+            new User { Id = 2, FirstName = "Jane", LastName = "Smith", LoginId = null }
         );
-
+        
         // Seed Cycles
         modelBuilder.Entity<Cycle>().HasData(
             new Cycle
@@ -88,7 +78,7 @@ public class AiTemplatesDbContext(DbContextOptions<AiTemplatesDbContext> options
                 EndDate = null, UserId = 2
             }
         );
-
+        
         // Seed Workouts (with and without cycles)
         modelBuilder.Entity<Workout>().HasData(
             new Workout { Id = 1, UserId = 1, Date = DateTime.Now.AddDays(-20).ToUniversalTime(), CycleId = 1 },
@@ -96,7 +86,7 @@ public class AiTemplatesDbContext(DbContextOptions<AiTemplatesDbContext> options
             new Workout { Id = 3, UserId = 2, Date = DateTime.Now.AddDays(-10).ToUniversalTime(), CycleId = null }, // No cycle
             new Workout { Id = 4, UserId = 2, Date = DateTime.Now.AddDays(-7).ToUniversalTime(), CycleId = 2 }
         );
-
+        
         // Seed Workout Exercises
         modelBuilder.Entity<WorkoutExercise>().HasData(
             new WorkoutExercise { Id = 1, WorkoutId = 1, ExerciseId = 1, Notes = "Good form" },
@@ -104,7 +94,7 @@ public class AiTemplatesDbContext(DbContextOptions<AiTemplatesDbContext> options
             new WorkoutExercise { Id = 3, WorkoutId = 3, ExerciseId = 3, Notes = "Tough day" },
             new WorkoutExercise { Id = 4, WorkoutId = 4, ExerciseId = 4, Notes = "Felt strong" }
         );
-
+        
         // Seed Workout Sets
         modelBuilder.Entity<WorkoutExerciseSet>().HasData(
             // For Workout 1 (Incline Bench Press)

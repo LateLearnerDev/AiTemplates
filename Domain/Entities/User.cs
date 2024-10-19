@@ -1,16 +1,14 @@
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-
 namespace Domain.Entities;
 
-public class User
+public class User 
 {
-    [Key] public int Id { get; set; }
+    public int Id { get; set; }
     public required string FirstName { get; set; }
-    public required string LastNameName { get; set; }
+    public required string LastName { get; set; }
     
     public int? LoginId { get; set; }
-    [ForeignKey(nameof(LoginId))] public LoginDetails? LoginDetails { get; set; }
+    public LoginDetails? LoginDetails { get; set; }
     
     public ICollection<Workout> Workouts { get; set; } = new List<Workout>();
+    public ICollection<Cycle> Cycles { get; set; } = new List<Cycle>();
 }

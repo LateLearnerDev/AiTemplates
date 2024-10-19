@@ -50,16 +50,16 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Cycles");
+                    b.ToTable("Cycles", (string)null);
 
                     b.HasData(
                         new
                         {
                             Id = 1,
-                            EndDate = new DateTime(2024, 10, 12, 20, 34, 26, 900, DateTimeKind.Utc).AddTicks(3706),
+                            EndDate = new DateTime(2024, 10, 17, 15, 17, 0, 40, DateTimeKind.Utc).AddTicks(1055),
                             LengthInWeeks = 4,
                             Name = "Strength Training Cycle",
-                            StartDate = new DateTime(2024, 9, 14, 20, 34, 26, 900, DateTimeKind.Utc).AddTicks(3653),
+                            StartDate = new DateTime(2024, 9, 19, 15, 17, 0, 40, DateTimeKind.Utc).AddTicks(993),
                             UserId = 1
                         },
                         new
@@ -67,7 +67,7 @@ namespace Infrastructure.Migrations
                             Id = 2,
                             LengthInWeeks = 6,
                             Name = "Hypertrophy Cycle",
-                            StartDate = new DateTime(2024, 9, 30, 20, 34, 26, 900, DateTimeKind.Utc).AddTicks(3710),
+                            StartDate = new DateTime(2024, 10, 5, 15, 17, 0, 40, DateTimeKind.Utc).AddTicks(1059),
                             UserId = 2
                         });
                 });
@@ -89,7 +89,7 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Exercises");
+                    b.ToTable("Exercises", (string)null);
 
                     b.HasData(
                         new
@@ -168,7 +168,7 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Gyms");
+                    b.ToTable("Gyms", (string)null);
 
                     b.HasData(
                         new
@@ -207,7 +207,7 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("GymId");
 
-                    b.ToTable("GymEquipments");
+                    b.ToTable("GymEquipments", (string)null);
 
                     b.HasData(
                         new
@@ -292,7 +292,7 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("GymEquipmentId");
 
-                    b.ToTable("GymEquipmentExercises");
+                    b.ToTable("GymEquipmentExercises", (string)null);
 
                     b.HasData(
                         new
@@ -351,25 +351,7 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("LoginDetails");
-                });
-
-            modelBuilder.Entity("Domain.Entities.Product", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<decimal>("Price")
-                        .HasColumnType("numeric");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Products");
+                    b.ToTable("LoginDetails", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.User", b =>
@@ -384,7 +366,7 @@ namespace Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("LastNameName")
+                    b.Property<string>("LastName")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -395,20 +377,20 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("LoginId");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
 
                     b.HasData(
                         new
                         {
                             Id = 1,
                             FirstName = "John",
-                            LastNameName = "Doe"
+                            LastName = "Doe"
                         },
                         new
                         {
                             Id = 2,
                             FirstName = "Jane",
-                            LastNameName = "Smith"
+                            LastName = "Smith"
                         });
                 });
 
@@ -435,34 +417,34 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Workouts");
+                    b.ToTable("Workouts", (string)null);
 
                     b.HasData(
                         new
                         {
                             Id = 1,
                             CycleId = 1,
-                            Date = new DateTime(2024, 9, 24, 20, 34, 26, 900, DateTimeKind.Utc).AddTicks(3723),
+                            Date = new DateTime(2024, 9, 29, 15, 17, 0, 40, DateTimeKind.Utc).AddTicks(1076),
                             UserId = 1
                         },
                         new
                         {
                             Id = 2,
                             CycleId = 1,
-                            Date = new DateTime(2024, 9, 26, 20, 34, 26, 900, DateTimeKind.Utc).AddTicks(3726),
+                            Date = new DateTime(2024, 10, 1, 15, 17, 0, 40, DateTimeKind.Utc).AddTicks(1079),
                             UserId = 1
                         },
                         new
                         {
                             Id = 3,
-                            Date = new DateTime(2024, 10, 4, 20, 34, 26, 900, DateTimeKind.Utc).AddTicks(3728),
+                            Date = new DateTime(2024, 10, 9, 15, 17, 0, 40, DateTimeKind.Utc).AddTicks(1081),
                             UserId = 2
                         },
                         new
                         {
                             Id = 4,
                             CycleId = 2,
-                            Date = new DateTime(2024, 10, 7, 20, 34, 26, 900, DateTimeKind.Utc).AddTicks(3731),
+                            Date = new DateTime(2024, 10, 12, 15, 17, 0, 40, DateTimeKind.Utc).AddTicks(1084),
                             UserId = 2
                         });
                 });
@@ -495,7 +477,7 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("WorkoutId");
 
-                    b.ToTable("WorkoutExercises");
+                    b.ToTable("WorkoutExercises", (string)null);
 
                     b.HasData(
                         new
@@ -552,7 +534,7 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("WorkoutExerciseId");
 
-                    b.ToTable("WorkoutExerciseSets");
+                    b.ToTable("WorkoutExerciseSets", (string)null);
 
                     b.HasData(
                         new
@@ -624,7 +606,7 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("Domain.Entities.Cycle", b =>
                 {
                     b.HasOne("Domain.Entities.User", "User")
-                        .WithMany()
+                        .WithMany("Cycles")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -635,7 +617,7 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("Domain.Entities.GymEquipment", b =>
                 {
                     b.HasOne("Domain.Entities.Gym", "Gym")
-                        .WithMany()
+                        .WithMany("GymEquipments")
                         .HasForeignKey("GymId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -646,13 +628,13 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("Domain.Entities.GymEquipmentExercise", b =>
                 {
                     b.HasOne("Domain.Entities.Exercise", "Exercise")
-                        .WithMany()
+                        .WithMany("GymEquipmentExercises")
                         .HasForeignKey("ExerciseId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Domain.Entities.GymEquipment", "GymEquipment")
-                        .WithMany()
+                        .WithMany("GymEquipmentExercises")
                         .HasForeignKey("GymEquipmentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -674,8 +656,9 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("Domain.Entities.Workout", b =>
                 {
                     b.HasOne("Domain.Entities.Cycle", "Cycle")
-                        .WithMany()
-                        .HasForeignKey("CycleId");
+                        .WithMany("Workouts")
+                        .HasForeignKey("CycleId")
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.HasOne("Domain.Entities.User", "User")
                         .WithMany("Workouts")
@@ -691,17 +674,18 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("Domain.Entities.WorkoutExercise", b =>
                 {
                     b.HasOne("Domain.Entities.Exercise", "Exercise")
-                        .WithMany()
+                        .WithMany("WorkoutExercises")
                         .HasForeignKey("ExerciseId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Domain.Entities.GymEquipment", "GymEquipment")
-                        .WithMany()
-                        .HasForeignKey("GymEquipmentId");
+                        .WithMany("WorkoutExercises")
+                        .HasForeignKey("GymEquipmentId")
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.HasOne("Domain.Entities.Workout", "Workout")
-                        .WithMany()
+                        .WithMany("WorkoutExercises")
                         .HasForeignKey("WorkoutId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -716,7 +700,7 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("Domain.Entities.WorkoutExerciseSet", b =>
                 {
                     b.HasOne("Domain.Entities.WorkoutExercise", "WorkoutExercise")
-                        .WithMany()
+                        .WithMany("WorkoutExerciseSets")
                         .HasForeignKey("WorkoutExerciseId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -724,9 +708,45 @@ namespace Infrastructure.Migrations
                     b.Navigation("WorkoutExercise");
                 });
 
-            modelBuilder.Entity("Domain.Entities.User", b =>
+            modelBuilder.Entity("Domain.Entities.Cycle", b =>
                 {
                     b.Navigation("Workouts");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Exercise", b =>
+                {
+                    b.Navigation("GymEquipmentExercises");
+
+                    b.Navigation("WorkoutExercises");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Gym", b =>
+                {
+                    b.Navigation("GymEquipments");
+                });
+
+            modelBuilder.Entity("Domain.Entities.GymEquipment", b =>
+                {
+                    b.Navigation("GymEquipmentExercises");
+
+                    b.Navigation("WorkoutExercises");
+                });
+
+            modelBuilder.Entity("Domain.Entities.User", b =>
+                {
+                    b.Navigation("Cycles");
+
+                    b.Navigation("Workouts");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Workout", b =>
+                {
+                    b.Navigation("WorkoutExercises");
+                });
+
+            modelBuilder.Entity("Domain.Entities.WorkoutExercise", b =>
+                {
+                    b.Navigation("WorkoutExerciseSets");
                 });
 #pragma warning restore 612, 618
         }

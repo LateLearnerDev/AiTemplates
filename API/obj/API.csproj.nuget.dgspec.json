@@ -29,8 +29,8 @@
               "C:\\Users\\rlpov\\projects\\AiTemplates\\Application\\Application.csproj": {
                 "projectPath": "C:\\Users\\rlpov\\projects\\AiTemplates\\Application\\Application.csproj"
               },
-              "C:\\Users\\rlpov\\projects\\AiTemplates\\Infrastructure\\Infrastructure.csproj": {
-                "projectPath": "C:\\Users\\rlpov\\projects\\AiTemplates\\Infrastructure\\Infrastructure.csproj"
+              "C:\\Users\\rlpov\\projects\\AiTemplates\\Database\\Database.csproj": {
+                "projectPath": "C:\\Users\\rlpov\\projects\\AiTemplates\\Database\\Database.csproj"
               }
             }
           }
@@ -144,67 +144,14 @@
         }
       }
     },
-    "C:\\Users\\rlpov\\projects\\AiTemplates\\Domain\\Domain.csproj": {
+    "C:\\Users\\rlpov\\projects\\AiTemplates\\Database\\Database.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\rlpov\\projects\\AiTemplates\\Domain\\Domain.csproj",
-        "projectName": "Domain",
-        "projectPath": "C:\\Users\\rlpov\\projects\\AiTemplates\\Domain\\Domain.csproj",
+        "projectUniqueName": "C:\\Users\\rlpov\\projects\\AiTemplates\\Database\\Database.csproj",
+        "projectName": "Database",
+        "projectPath": "C:\\Users\\rlpov\\projects\\AiTemplates\\Database\\Database.csproj",
         "packagesPath": "C:\\Users\\rlpov\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\rlpov\\projects\\AiTemplates\\Domain\\obj\\",
-        "projectStyle": "PackageReference",
-        "configFilePaths": [
-          "C:\\Users\\rlpov\\AppData\\Roaming\\NuGet\\NuGet.Config"
-        ],
-        "originalTargetFrameworks": [
-          "net8.0"
-        ],
-        "sources": {
-          "https://api.nuget.org/v3/index.json": {}
-        },
-        "frameworks": {
-          "net8.0": {
-            "targetAlias": "net8.0",
-            "projectReferences": {}
-          }
-        },
-        "warningProperties": {
-          "warnAsError": [
-            "NU1605"
-          ]
-        }
-      },
-      "frameworks": {
-        "net8.0": {
-          "targetAlias": "net8.0",
-          "imports": [
-            "net461",
-            "net462",
-            "net47",
-            "net471",
-            "net472",
-            "net48",
-            "net481"
-          ],
-          "assetTargetFallback": true,
-          "warn": true,
-          "frameworkReferences": {
-            "Microsoft.NETCore.App": {
-              "privateAssets": "all"
-            }
-          },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.301/PortableRuntimeIdentifierGraph.json"
-        }
-      }
-    },
-    "C:\\Users\\rlpov\\projects\\AiTemplates\\Infrastructure\\Infrastructure.csproj": {
-      "version": "1.0.0",
-      "restore": {
-        "projectUniqueName": "C:\\Users\\rlpov\\projects\\AiTemplates\\Infrastructure\\Infrastructure.csproj",
-        "projectName": "Infrastructure",
-        "projectPath": "C:\\Users\\rlpov\\projects\\AiTemplates\\Infrastructure\\Infrastructure.csproj",
-        "packagesPath": "C:\\Users\\rlpov\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\rlpov\\projects\\AiTemplates\\Infrastructure\\obj\\",
+        "outputPath": "C:\\Users\\rlpov\\projects\\AiTemplates\\Database\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\rlpov\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -265,6 +212,59 @@
               "version": "[8.0.8, )"
             }
           },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.301/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\rlpov\\projects\\AiTemplates\\Domain\\Domain.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\rlpov\\projects\\AiTemplates\\Domain\\Domain.csproj",
+        "projectName": "Domain",
+        "projectPath": "C:\\Users\\rlpov\\projects\\AiTemplates\\Domain\\Domain.csproj",
+        "packagesPath": "C:\\Users\\rlpov\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\rlpov\\projects\\AiTemplates\\Domain\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\rlpov\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
           "imports": [
             "net461",
             "net462",

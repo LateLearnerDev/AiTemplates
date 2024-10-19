@@ -9,7 +9,7 @@
       "API/1.0.0": {
         "dependencies": {
           "Application": "1.0.0",
-          "Infrastructure": "1.0.0",
+          "Database": "1.0.0",
           "Microsoft.AspNetCore.OpenApi": "8.0.6",
           "Swashbuckle.AspNetCore": "6.4.0"
         },
@@ -484,12 +484,7 @@
           "Application.dll": {}
         }
       },
-      "Domain/1.0.0": {
-        "runtime": {
-          "Domain.dll": {}
-        }
-      },
-      "Infrastructure/1.0.0": {
+      "Database/1.0.0": {
         "dependencies": {
           "Application": "1.0.0",
           "Domain": "1.0.0",
@@ -500,7 +495,12 @@
           "Npgsql.EntityFrameworkCore.PostgreSQL": "8.0.8"
         },
         "runtime": {
-          "Infrastructure.dll": {}
+          "Database.dll": {}
+        }
+      },
+      "Domain/1.0.0": {
+        "runtime": {
+          "Domain.dll": {}
         }
       }
     }
@@ -943,12 +943,12 @@
       "serviceable": false,
       "sha512": ""
     },
-    "Domain/1.0.0": {
+    "Database/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
     },
-    "Infrastructure/1.0.0": {
+    "Domain/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

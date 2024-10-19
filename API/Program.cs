@@ -1,4 +1,5 @@
 using Application;
+using Domain.Interfaces;
 using Infrastructure;
 using Microsoft.EntityFrameworkCore;
 

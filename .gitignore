@@ -1,0 +1,62 @@
+# Build folders
+bin/
+obj/
+
+# User-specific files
+.vscode/
+.vs/
+.idea/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.sqlite
+*.sqlite3
+
+# Rider-specific files
+.idea/
+.idea/**/workspace.xml
+.idea/**/tasks.xml
+.idea/dictionaries
+.idea/**/libraries
+
+# Logs
+*.log
+*.tlog
+*.log*
+
+# NuGet Packages
+*.nupkg
+*.snupkg
+packages/
+
+# DotNetCore specific
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# ASP.NET Scaffolding
+ScaffoldingReadMe.txt
+
+# DotNet publish folder
+publish/
+publishProfiles/
+
+# Generated class files
+*.g.cs
+
+# Entity Framework migrations
+Migrations/
+
+# Compiled DLLs
+*.dll
+*.exe
+*.pdb
+
+# Exclude all *.db and config files (optional based on your need)
+*.db
+*.config
+
+# Gitkraken and other temporary files
+*.gitkraken
+

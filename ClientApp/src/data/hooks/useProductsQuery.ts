@@ -9,7 +9,7 @@ export const productKeys = {
 };
 
 const fetchProducts = async () => {
-    const response = await axios.get<IProduct[]>(`${apiBaseUrl}/api/product`);
+    const response = await axios.get<IProduct[]>(`${apiBaseUrl}/gyms`);
     return response.data;
 };
 

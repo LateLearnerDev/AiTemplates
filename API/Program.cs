@@ -1,5 +1,5 @@
+using API;
 using Application;
-using Domain.Interfaces;
 using Infrastructure;
 using Microsoft.EntityFrameworkCore;
 
@@ -26,7 +26,6 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<AiTemplatesDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("PostgresConnection")));
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(ApplicationAssembly).Assembly));
-
 // builder.Services.AddScoped<IProductRepository, ProductRepository>();
 
 var app = builder.Build();
@@ -40,7 +39,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseRouting();
 app.UseAuthorization();
-app.MapControllers();
+app.UseEndpoints(typeof(ApiAssembly).Assembly);
 app.Run();
 

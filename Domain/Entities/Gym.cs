@@ -1,6 +1,6 @@
 namespace Domain.Entities;
 
-public class Gym
+public class Gym : IEntity
 {
     public int Id { get; set; }
     public required string Name { get; set; }

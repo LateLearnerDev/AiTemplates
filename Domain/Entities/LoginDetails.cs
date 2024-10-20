@@ -1,6 +1,6 @@
 namespace Domain.Entities;
 
-public class LoginDetails
+public class LoginDetails : IEntity
 {
     public int Id { get; set; }
     public required string Username { get; set; }

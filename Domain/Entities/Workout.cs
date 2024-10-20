@@ -1,6 +1,6 @@
 namespace Domain.Entities;
 
-public class Workout
+public class Workout : IEntity
 {
     public int Id { get; set; }
     public DateTime Date { get; set; }

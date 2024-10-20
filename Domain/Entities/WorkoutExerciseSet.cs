@@ -1,6 +1,6 @@
 namespace Domain.Entities;
 
-public class WorkoutExerciseSet 
+public class WorkoutExerciseSet : IEntity
 {
     public int Id { get; set; }
     public int SetNumber { get; set; }

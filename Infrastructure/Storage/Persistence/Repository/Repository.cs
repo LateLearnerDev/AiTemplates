@@ -4,7 +4,7 @@ namespace Infrastructure.Storage.Persistence.Repository;
 
 public class Repository<T> : IRepository<T> where T : IEntity
 {
-    private readonly 
+    // private readonly 
     
     public IQueryable<T> Query()
     {

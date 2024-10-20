@@ -1,6 +1,7 @@
 using API;
 using Application;
 using Infrastructure;
+using Infrastructure.Storage.Persistence.Context;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);

@@ -1,3 +1,6 @@
+C:\Users\rlpov\projects\AiTemplates\Database\bin\Debug\net8.0\Infrastructure.deps.json
+C:\Users\rlpov\projects\AiTemplates\Database\bin\Debug\net8.0\Infrastructure.runtimeconfig.json
+C:\Users\rlpov\projects\AiTemplates\Database\bin\Debug\net8.0\Infrastructure.exe
 C:\Users\rlpov\projects\AiTemplates\Database\bin\Debug\net8.0\Database.exe
 C:\Users\rlpov\projects\AiTemplates\Database\bin\Debug\net8.0\Database.deps.json
 C:\Users\rlpov\projects\AiTemplates\Database\bin\Debug\net8.0\Database.runtimeconfig.json
@@ -118,8 +121,10 @@ C:\Users\rlpov\projects\AiTemplates\Database\bin\Debug\net8.0\runtimes\win\lib\n
 C:\Users\rlpov\projects\AiTemplates\Database\bin\Debug\net8.0\runtimes\win\lib\net8.0\System.Windows.Extensions.dll
 C:\Users\rlpov\projects\AiTemplates\Database\bin\Debug\net8.0\Application.dll
 C:\Users\rlpov\projects\AiTemplates\Database\bin\Debug\net8.0\Domain.dll
+C:\Users\rlpov\projects\AiTemplates\Database\bin\Debug\net8.0\Infrastructure.dll
 C:\Users\rlpov\projects\AiTemplates\Database\bin\Debug\net8.0\Application.pdb
 C:\Users\rlpov\projects\AiTemplates\Database\bin\Debug\net8.0\Domain.pdb
+C:\Users\rlpov\projects\AiTemplates\Database\bin\Debug\net8.0\Infrastructure.pdb
 C:\Users\rlpov\projects\AiTemplates\Database\obj\Debug\net8.0\Database.csproj.AssemblyReference.cache
 C:\Users\rlpov\projects\AiTemplates\Database\obj\Debug\net8.0\Database.GeneratedMSBuildEditorConfig.editorconfig
 C:\Users\rlpov\projects\AiTemplates\Database\obj\Debug\net8.0\Database.AssemblyInfoInputs.cache

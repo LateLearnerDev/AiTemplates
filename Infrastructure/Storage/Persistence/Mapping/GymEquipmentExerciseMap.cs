@@ -2,7 +2,7 @@ using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Infrastructure.Persistence.Mapping;
+namespace Infrastructure.Storage.Persistence.Mapping;
 
 public class GymEquipmentExerciseMap : IEntityTypeConfiguration<GymEquipmentExercise>
 {

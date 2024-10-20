@@ -1446,6 +1446,21 @@
         "runtime": {
           "bin/placeholder/Domain.dll": {}
         }
+      },
+      "Infrastructure/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "dependencies": {
+          "Domain": "1.0.0",
+          "Microsoft.EntityFrameworkCore": "8.0.8",
+          "Npgsql.EntityFrameworkCore.PostgreSQL": "8.0.8"
+        },
+        "compile": {
+          "bin/placeholder/Infrastructure.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Infrastructure.dll": {}
+        }
       }
     }
   },
@@ -4025,12 +4040,18 @@
       "type": "project",
       "path": "../Domain/Domain.csproj",
       "msbuildProject": "../Domain/Domain.csproj"
+    },
+    "Infrastructure/1.0.0": {
+      "type": "project",
+      "path": "../Infrastructure/Infrastructure.csproj",
+      "msbuildProject": "../Infrastructure/Infrastructure.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net8.0": [
       "Application >= 1.0.0",
       "Domain >= 1.0.0",
+      "Infrastructure >= 1.0.0",
       "Microsoft.EntityFrameworkCore >= 8.0.8",
       "Microsoft.EntityFrameworkCore.Design >= 8.0.8",
       "Microsoft.Extensions.Configuration >= 8.0.0",
@@ -4069,6 +4090,9 @@
             },
             "C:\\Users\\rlpov\\projects\\AiTemplates\\Domain\\Domain.csproj": {
               "projectPath": "C:\\Users\\rlpov\\projects\\AiTemplates\\Domain\\Domain.csproj"
+            },
+            "C:\\Users\\rlpov\\projects\\AiTemplates\\Infrastructure\\Infrastructure.csproj": {
+              "projectPath": "C:\\Users\\rlpov\\projects\\AiTemplates\\Infrastructure\\Infrastructure.csproj"
             }
           }
         }

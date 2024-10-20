@@ -1,8 +1,9 @@
+using Infrastructure.Storage.Persistence.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
 
-namespace Infrastructure;
+namespace Database;
 
 public class DesignTimeDbContextFactory : IDesignTimeDbContextFactory<AiTemplatesDbContext>
 {
@@ -18,7 +19,7 @@ public class DesignTimeDbContextFactory : IDesignTimeDbContextFactory<AiTemplate
         var connectionString = configuration.GetConnectionString("PostgresConnection");
         var optionsBuilder = new DbContextOptionsBuilder<AiTemplatesDbContext>();
         // optionsBuilder.UseMySQL(connectionString);
-        optionsBuilder.UseNpgsql(connectionString); 
+        optionsBuilder.UseNpgsql(connectionString, b => b.MigrationsAssembly("Database")); 
 
         return new AiTemplatesDbContext(optionsBuilder.Options);
     }

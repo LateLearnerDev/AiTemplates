@@ -1,7 +1,7 @@
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace Infrastructure;
+namespace Infrastructure.Storage.Persistence.Context;
 
 public class AiTemplatesDbContext(DbContextOptions<AiTemplatesDbContext> options) : DbContext(options)
 {
@@ -69,22 +69,22 @@ public class AiTemplatesDbContext(DbContextOptions<AiTemplatesDbContext> options
         modelBuilder.Entity<Cycle>().HasData(
             new Cycle
             {
-                Id = 1, Name = "Strength Training Cycle", StartDate = DateTime.Now.AddDays(-30).ToUniversalTime(), LengthInWeeks = 4,
-                EndDate = DateTime.Now.AddDays(-2).ToUniversalTime(), UserId = 1
+                Id = 1, Name = "Strength Training Cycle", StartDate = new DateTime(2024, 4, 1).ToUniversalTime(), LengthInWeeks = 4,
+                EndDate = new DateTime(2024, 5, 15).ToUniversalTime(), UserId = 1
             },
             new Cycle
             {
-                Id = 2, Name = "Hypertrophy Cycle", StartDate = DateTime.Now.AddDays(-14).ToUniversalTime(), LengthInWeeks = 6,
+                Id = 2, Name = "Hypertrophy Cycle", StartDate = new DateTime(2024, 5, 1).ToUniversalTime(), LengthInWeeks = 6,
                 EndDate = null, UserId = 2
             }
         );
         
         // Seed Workouts (with and without cycles)
         modelBuilder.Entity<Workout>().HasData(
-            new Workout { Id = 1, UserId = 1, Date = DateTime.Now.AddDays(-20).ToUniversalTime(), CycleId = 1 },
-            new Workout { Id = 2, UserId = 1, Date = DateTime.Now.AddDays(-18).ToUniversalTime(), CycleId = 1 },
-            new Workout { Id = 3, UserId = 2, Date = DateTime.Now.AddDays(-10).ToUniversalTime(), CycleId = null }, // No cycle
-            new Workout { Id = 4, UserId = 2, Date = DateTime.Now.AddDays(-7).ToUniversalTime(), CycleId = 2 }
+            new Workout { Id = 1, UserId = 1, Date = new DateTime(2024, 4, 1).ToUniversalTime(), CycleId = 1 },
+            new Workout { Id = 2, UserId = 1, Date = new DateTime(2024, 4, 3).ToUniversalTime(), CycleId = 1 },
+            new Workout { Id = 3, UserId = 2, Date = new DateTime(2024, 3, 1).ToUniversalTime(), CycleId = null }, // No cycle
+            new Workout { Id = 4, UserId = 2, Date = new DateTime(2024, 5, 1).ToUniversalTime(), CycleId = 2 }
         );
         
         // Seed Workout Exercises

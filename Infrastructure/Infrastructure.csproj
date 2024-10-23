@@ -8,10 +8,13 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\Application\Application.csproj" />
       <ProjectReference Include="..\Domain\Domain.csproj" />
     </ItemGroup>
 
     <ItemGroup>
+      <PackageReference Include="Autofac" Version="8.1.1" />
+      <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="10.0.0" />
       <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.8" />
       <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.8">
         <PrivateAssets>all</PrivateAssets>

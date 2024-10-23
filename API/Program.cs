@@ -1,5 +1,7 @@
 using API;
 using Application;
+using Autofac;
+using Autofac.Extensions.DependencyInjection;
 using Infrastructure;
 using Infrastructure.Storage.Persistence.Context;
 using Microsoft.EntityFrameworkCore;
@@ -27,7 +29,12 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<AiTemplatesDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("PostgresConnection")));
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(ApplicationAssembly).Assembly));
-// builder.Services.AddScoped<IProductRepository, ProductRepository>();
+
+builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
+builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder =>
+{
+    containerBuilder.RegisterModule(new InfrastructureDependencyModule());
+});
 
 var app = builder.Build();
 app.UseCors("AllowAllOrigins");

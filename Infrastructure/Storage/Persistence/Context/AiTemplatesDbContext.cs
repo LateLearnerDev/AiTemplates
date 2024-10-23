@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
@@ -5,6 +6,26 @@ namespace Infrastructure.Storage.Persistence.Context;
 
 public class AiTemplatesDbContext(DbContextOptions<AiTemplatesDbContext> options) : DbContext(options)
 {
+    public async Task<int> SaveChangesAsync()
+    {
+        try
+        {
+            var affected = await base.SaveChangesAsync();
+            return affected;
+        }
+        catch (DbUpdateException e)
+        {
+            Debug.WriteLine(e.Message);
+        }
+        catch (Exception e)
+        {
+            Debug.WriteLine(e.Message);
+            throw;
+        }
+
+        return await base.SaveChangesAsync();
+    }
+    
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);

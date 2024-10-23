@@ -1,6 +1,6 @@
 using Domain.Entities;
 
-namespace Infrastructure.Storage.Persistence.Repository;
+namespace Application.Common.Interfaces;
 
 public interface IRepository<T> where T : IEntity
 {

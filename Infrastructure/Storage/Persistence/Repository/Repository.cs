@@ -1,11 +1,12 @@
+using Application.Common.Interfaces;
 using Domain.Entities;
+using Infrastructure.Storage.Persistence.Context;
 
 namespace Infrastructure.Storage.Persistence.Repository;
 
-public class Repository<T> : IRepository<T> where T : IEntity
+public class Repository<T>(AiTemplatesDbContext context) : IRepository<T>
+    where T : IEntity
 {
-    // private readonly 
-    
     public IQueryable<T> Query()
     {
         throw new NotImplementedException();

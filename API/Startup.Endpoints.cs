@@ -1,5 +1,5 @@
 using System.Reflection;
-using API.Infrastructure.Extensions;
+using Infrastructure.Extensions.Endpoints;
 
 namespace API;
 

@@ -1,7 +1,7 @@
 {
   "version": 2,
-  "dgSpecHash": "xQ117vyqmyV/PHtn7gnGEyPumkmBRDt5fb8tf7H4Fp6XmdWgtDemK7cxlb6E5vqj8uAGB6BLvoCLe5KLUCCWew==",
-  "success": true,
+  "dgSpecHash": "bBeP8Q9zHoT1eUseDMcqE/91m89cbAFn94bEGwHjnHgpjpFX7iIARNFo7WRknxJcp/qNfO65s8qv7C8v6hGlSA==",
+  "success": false,
   "projectFilePath": "C:\\Users\\rlpov\\projects\\AiTemplates\\API\\API.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\rlpov\\.nuget\\packages\\autofac\\8.1.1\\autofac.8.1.1.nupkg.sha512",
@@ -88,5 +88,15 @@
     "C:\\Users\\rlpov\\.nuget\\packages\\system.windows.extensions\\8.0.0\\system.windows.extensions.8.0.0.nupkg.sha512",
     "C:\\Users\\rlpov\\.nuget\\packages\\zstdsharp.port\\0.8.0\\zstdsharp.port.0.8.0.nupkg.sha512"
   ],
-  "logs": []
+  "logs": [
+    {
+      "code": "NU1605",
+      "level": "Error",
+      "message": "Warning As Error: Detected package downgrade: Microsoft.AspNetCore.OpenApi from 8.0.10 to 8.0.6. Reference the package directly from the project to select a different version. \r\n API -> Database -> Infrastructure -> Microsoft.AspNetCore.OpenApi (>= 8.0.10) \r\n API -> Microsoft.AspNetCore.OpenApi (>= 8.0.6)",
+      "libraryId": "Microsoft.AspNetCore.OpenApi",
+      "targetGraphs": [
+        "net8.0"
+      ]
+    }
+  ]
 }

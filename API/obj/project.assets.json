@@ -1614,6 +1614,7 @@
           "Autofac": "8.1.1",
           "Autofac.Extensions.DependencyInjection": "10.0.0",
           "Domain": "1.0.0",
+          "Microsoft.AspNetCore.OpenApi": "8.0.10",
           "Microsoft.EntityFrameworkCore": "8.0.8",
           "Npgsql.EntityFrameworkCore.PostgreSQL": "8.0.8"
         },
@@ -4691,5 +4692,16 @@
         "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.301/PortableRuntimeIdentifierGraph.json"
       }
     }
-  }
+  },
+  "logs": [
+    {
+      "code": "NU1605",
+      "level": "Error",
+      "message": "Warning As Error: Detected package downgrade: Microsoft.AspNetCore.OpenApi from 8.0.10 to 8.0.6. Reference the package directly from the project to select a different version. \r\n API -> Database -> Infrastructure -> Microsoft.AspNetCore.OpenApi (>= 8.0.10) \r\n API -> Microsoft.AspNetCore.OpenApi (>= 8.0.6)",
+      "libraryId": "Microsoft.AspNetCore.OpenApi",
+      "targetGraphs": [
+        "net8.0"
+      ]
+    }
+  ]
 }

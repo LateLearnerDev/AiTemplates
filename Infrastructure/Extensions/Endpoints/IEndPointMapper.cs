@@ -1,4 +1,6 @@
-namespace API.Infrastructure.Extensions;
+using Microsoft.AspNetCore.Routing;
+
+namespace Infrastructure.Extensions.Endpoints;
 
 public interface IEndPointMapper
 {

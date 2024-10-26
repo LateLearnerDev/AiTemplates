@@ -1,6 +1,6 @@
-using API.Infrastructure.Extensions;
 using Application.Gyms;
 using Application.Gyms.Dtos;
+using Infrastructure.Extensions.Endpoints;
 
 namespace API.Endpoints;
 

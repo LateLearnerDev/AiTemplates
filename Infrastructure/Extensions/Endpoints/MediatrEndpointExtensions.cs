@@ -1,7 +1,10 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Routing;
 
-namespace API.Infrastructure.Extensions;
+namespace Infrastructure.Extensions.Endpoints;
 
 public static class MediatrEndpointExtensions
 {

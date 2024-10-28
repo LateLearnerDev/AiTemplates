@@ -1,34 +1,47 @@
 using Application.Common.Interfaces;
 using Domain.Entities;
 using Infrastructure.Storage.Persistence.Context;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Storage.Persistence.Repository;
 
 public class Repository<T>(AiTemplatesDbContext context) : IRepository<T>
-    where T : IEntity
+    where T : Entity
 {
     public IQueryable<T> Query()
     {
-        throw new NotImplementedException();
+        return context.Set<T>().AsNoTracking();
     }
 
-    public Task<T> AddAsync(T item)
+    public async Task<T> AddAsync(T item)
     {
-        throw new NotImplementedException();
+        var set = context.Set<T>();
+        await set.AddAsync(item);
+        await context.SaveChangesAsync();
+        return item;
     }
 
-    public Task<IList<T>> AddRangeAsync(IList<T> items)
+    public async Task<IList<T>> AddRangeAsync(IList<T> items)
     {
-        throw new NotImplementedException();
+        var set = context.Set<T>();
+        await set.AddRangeAsync(items);
+        await context.SaveChangesAsync();
+        return items;
     }
 
-    public Task<T> UpdateAsync(T item)
+    public async Task<T> UpdateAsync(T item)
     {
-        throw new NotImplementedException();
+        var set = context.Set<T>();
+        var original = set.First(entity => entity.Id == item.Id);
+        context.Update(original).CurrentValues.SetValues(item);
+        await context.SaveChangesAsync();
+        return item;
     }
 
-    public Task<int> HardDeleteAsync(T item)
+    public async Task<int> HardDeleteAsync(T item)
     {
-        throw new NotImplementedException();
+        var set = context.Set<T>();
+        await set.DeleteByKeyAsync(item);
+        return await context.SaveChangesAsync();
     }
 }

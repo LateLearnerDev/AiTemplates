@@ -1,8 +1,7 @@
 namespace Domain.Entities;
 
-public class GymEquipment : IEntity
+public class GymEquipment : Entity
 {
-    public int Id { get; set; }
     public required string Name { get; set; }
     public int GymId { get; set; }
     public Gym Gym { get; set; } = default!;

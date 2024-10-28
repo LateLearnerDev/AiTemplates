@@ -1,8 +1,7 @@
 namespace Domain.Entities;
 
-public class Cycle : IEntity
+public class Cycle : Entity
 {
-    public int Id { get; set; }
     public required string Name { get; set; }
     public DateTime? StartDate { get; set; }
     public int LengthInWeeks { get; set; }

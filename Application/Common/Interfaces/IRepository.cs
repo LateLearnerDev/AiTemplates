@@ -2,7 +2,7 @@ using Domain.Entities;
 
 namespace Application.Common.Interfaces;
 
-public interface IRepository<T> where T : IEntity
+public interface IRepository<T> where T : Entity
 {
     IQueryable<T> Query();
     

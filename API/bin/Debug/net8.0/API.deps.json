@@ -856,6 +856,18 @@
           }
         }
       },
+      "Z.EntityFramework.Extensions.EFCore/8.103.6": {
+        "dependencies": {
+          "Microsoft.EntityFrameworkCore.Relational": "8.0.8",
+          "System.Configuration.ConfigurationManager": "8.0.0"
+        },
+        "runtime": {
+          "lib/net8.0/Z.EntityFramework.Extensions.EFCore.dll": {
+            "assemblyVersion": "8.103.6.0",
+            "fileVersion": "8.103.6.0"
+          }
+        }
+      },
       "ZstdSharp.Port/0.8.0": {
         "runtime": {
           "lib/net8.0/ZstdSharp.dll": {
@@ -868,7 +880,8 @@
         "dependencies": {
           "CommunityToolkit.Diagnostics": "8.3.2",
           "Domain": "1.0.0",
-          "MediatR": "12.4.1"
+          "MediatR": "12.4.1",
+          "Microsoft.EntityFrameworkCore": "8.0.8"
         },
         "runtime": {
           "Application.dll": {}
@@ -902,7 +915,8 @@
           "Domain": "1.0.0",
           "Microsoft.AspNetCore.OpenApi": "8.0.10",
           "Microsoft.EntityFrameworkCore": "8.0.8",
-          "Npgsql.EntityFrameworkCore.PostgreSQL": "8.0.8"
+          "Npgsql.EntityFrameworkCore.PostgreSQL": "8.0.8",
+          "Z.EntityFramework.Extensions.EFCore": "8.103.6"
         },
         "runtime": {
           "Infrastructure.dll": {}
@@ -1489,6 +1503,13 @@
       "sha512": "sha512-Obg3a90MkOw9mYKxrardLpY2u0axDMrSmy4JCdq2cYbelM2cUwmUir5Bomvd1yxmPL9h5LVHU1tuKBZpUjfASg==",
       "path": "system.windows.extensions/8.0.0",
       "hashPath": "system.windows.extensions.8.0.0.nupkg.sha512"
+    },
+    "Z.EntityFramework.Extensions.EFCore/8.103.6": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-R3a+aS/IVIyfForaYnv4eaxf7OGIJ7yVLWMvb5LmCRW2f9SYtj4sE4lUfEhb3bUvUuMpuXvWElPhV3sb/UyJDQ==",
+      "path": "z.entityframework.extensions.efcore/8.103.6",
+      "hashPath": "z.entityframework.extensions.efcore.8.103.6.nupkg.sha512"
     },
     "ZstdSharp.Port/0.8.0": {
       "type": "package",

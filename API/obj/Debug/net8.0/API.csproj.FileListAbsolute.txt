@@ -143,3 +143,4 @@ C:\Users\rlpov\projects\AiTemplates\API\obj\Debug\net8.0\ref\API.dll
 C:\Users\rlpov\projects\AiTemplates\API\bin\Debug\net8.0\Autofac.dll
 C:\Users\rlpov\projects\AiTemplates\API\bin\Debug\net8.0\Autofac.Extensions.DependencyInjection.dll
 C:\Users\rlpov\projects\AiTemplates\API\bin\Debug\net8.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+C:\Users\rlpov\projects\AiTemplates\API\bin\Debug\net8.0\Z.EntityFramework.Extensions.EFCore.dll

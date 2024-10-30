@@ -41,7 +41,7 @@ public class Repository<T>(AiTemplatesDbContext context) : IRepository<T>
     public async Task<int> HardDeleteAsync(T item)
     {
         var set = context.Set<T>();
-        await set.DeleteByKeyAsync(item);
+        await set.SingleDeleteAsync(item);
         return await context.SaveChangesAsync();
     }
 }

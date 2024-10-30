@@ -9,6 +9,10 @@ public class GymEndpoints : IEndPointMapper
     public void MapEndpoints(IEndpointRouteBuilder endpointRouteBuilder)
     {
         endpointRouteBuilder.BuildPath("Gyms")
-            .MediateGet<GetGymsRequest, IEnumerable<GymDto>>("/");
+            .MediateGet<GetGymsRequest, IEnumerable<GymDto>>("/")
+            .MediateGet<GetGymByIdRequest, GymDto>("/{id:int}")
+            .MediatePost<CreateGymRequest, GymDto>("/")
+            .MediatePut<UpdateGymRequest, GymDto>("/")
+            .MediateDelete<DeleteGymRequest, bool>("{id:int}");
     }
 }

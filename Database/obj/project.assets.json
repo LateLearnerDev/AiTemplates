@@ -1510,7 +1510,8 @@
         "dependencies": {
           "CommunityToolkit.Diagnostics": "8.3.2",
           "Domain": "1.0.0",
-          "MediatR": "12.4.1"
+          "MediatR": "12.4.1",
+          "Microsoft.EntityFrameworkCore": "8.0.8"
         },
         "compile": {
           "bin/placeholder/Application.dll": {}
@@ -4277,11 +4278,6 @@
         "warnAsError": [
           "NU1605"
         ]
-      },
-      "restoreAuditProperties": {
-        "enableAudit": "true",
-        "auditLevel": "low",
-        "auditMode": "direct"
       }
     },
     "frameworks": {

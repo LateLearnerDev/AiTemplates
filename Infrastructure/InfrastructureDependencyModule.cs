@@ -1,5 +1,5 @@
 using Application.Common.Interfaces;
-using Application.Common.Services;
+using Application.Services;
 using Autofac;
 using Infrastructure.Ioc;
 using Infrastructure.Services;

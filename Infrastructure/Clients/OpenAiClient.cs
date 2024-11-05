@@ -13,7 +13,7 @@ public class OpenAiClient(HttpClient httpClient) : IOpenAiClient
         };
         var userMessage = new
         {
-            role = "user", content = "What is recursion is a programming context?"
+            role = "user", content = prompt
         };
         
         var requestBody = new
@@ -24,14 +24,15 @@ public class OpenAiClient(HttpClient httpClient) : IOpenAiClient
             temperature = 0.7            // Controls creativity; higher values produce more varied outputs
         };
 
-        var response = await httpClient.PostAsJsonAsync("completions", requestBody);
+        var response = await httpClient.PostAsJsonAsync("chat/completions", requestBody);
         response.EnsureSuccessStatusCode();
 
         var responseContent = await response.Content.ReadAsStringAsync();
         var result = JsonDocument.Parse(responseContent)
             .RootElement
             .GetProperty("choices")[0]
-            .GetProperty("text")
+            .GetProperty("message")
+            .GetProperty("content")
             .GetString();
 
         return result ?? string.Empty;

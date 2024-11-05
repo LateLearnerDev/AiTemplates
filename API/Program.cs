@@ -1,4 +1,5 @@
 using API;
+using API.Exceptions;
 using Application;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
@@ -35,6 +36,8 @@ builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder =>
 {
     containerBuilder.RegisterModule(new InfrastructureDependencyModule());
 });
+
+builder.Services.AddOpenAiClient(builder.Configuration["Clients:OpenAi:Key"] ?? throw new MissingApiKeyException());
 
 var app = builder.Build();
 app.UseCors("AllowAllOrigins");

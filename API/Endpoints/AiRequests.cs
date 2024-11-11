@@ -8,6 +8,6 @@ public class AiRequests :  IEndPointMapper
     public void MapEndpoints(IEndpointRouteBuilder endpointRouteBuilder)
     {
         endpointRouteBuilder.BuildPath("Ai")
-            .MediatePost<InteractRequest, string>("/");
+            .MediatePost<BasicInteractionRequest, string>("/");
     }
 }

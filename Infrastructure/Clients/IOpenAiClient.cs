@@ -2,5 +2,6 @@ namespace Infrastructure.Clients;
 
 public interface IOpenAiClient
 {
-    Task<string> GenerateTextAsync(string prompt);
+    Task<string> SendBasicSinglePromptResponseAsync(string prompt);
+    Task<string> SendCustomPromptResponseAsync(string userPrompt, string systemPrompt);
 }

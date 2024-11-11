@@ -37,7 +37,7 @@ builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder =>
     containerBuilder.RegisterModule(new InfrastructureDependencyModule());
 });
 
-builder.Services.AddOpenAiClient(builder.Configuration["Clients:OpenAi:Key"] ?? throw new MissingApiKeyException());
+builder.Services.AddOpenAiClient(builder.Configuration["OPENAI_API_KEY"] ?? throw new MissingApiKeyException());
 
 var app = builder.Build();
 app.UseCors("AllowAllOrigins");

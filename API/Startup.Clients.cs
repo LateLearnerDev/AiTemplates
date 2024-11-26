@@ -11,6 +11,7 @@ public static class StartupClients
         {
             client.BaseAddress = new Uri("https://api.openai.com/v1/");
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", openAiApiKey);
+            client.DefaultRequestHeaders.Add("OpenAI-Beta", "assistants=v2");
         });
     }
 }

@@ -1,5 +1,6 @@
+using Application.Assistants.Services;
 using Application.Common.Interfaces;
-using Application.Services;
+using Application.Completions.Services;
 using Autofac;
 using Infrastructure.Ioc;
 using Infrastructure.Services;
@@ -15,8 +16,11 @@ public class InfrastructureDependencyModule : DependencyResolvingModule
         builder.RegisterType<AiTemplatesDbContext>().InstancePerLifetimeScope();
         builder.RegisterGeneric(typeof(Repository<>)).As(typeof(IRepository<>));
         
-        builder.RegisterType<OpenAiService>()
-            .As<IOpenAiService>()
-            .InstancePerLifetimeScope();    
+        builder.RegisterType<CompletionService>()
+            .As<ICompletionService>()
+            .InstancePerLifetimeScope(); 
+        builder.RegisterType<AssistantService>()
+            .As<IAssistantService>()
+            .InstancePerLifetimeScope(); 
     }
 }

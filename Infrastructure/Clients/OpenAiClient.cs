@@ -1,45 +1,52 @@
 using System.Net.Http.Json;
-using System.Text.Json;
+using Infrastructure.Clients.Models;
+using Newtonsoft.Json;
 
 namespace Infrastructure.Clients;
 
 public class OpenAiClient(HttpClient httpClient) : IOpenAiClient
 {
-    public async Task<string> SendBasicSinglePromptResponseAsync(string prompt)
+    public async Task<Assistant?> CreateAssistantAsync(string name, string description, string instructions)
     {
-        var systemMessage = new
+        var request = new
         {
-            role = "system", content = "You are a helpful assistant."
-        };
-        var userMessage = new
-        {
-            role = "user", content = prompt
+            name,
+            description,
+            instructions, 
+            model = "gpt-4o"
         };
         
-        var requestBody = new
-        {
-            model = "gpt-4o",  // You can specify other models, e.g., gpt-3.5-turbo or gpt-4
-            messages = (object[])[systemMessage, userMessage],
-            max_tokens = 100,            // Adjust this according to your needs
-            temperature = 0.7            // Controls creativity; higher values produce more varied outputs
-        };
-
-        var response = await httpClient.PostAsJsonAsync("chat/completions", requestBody);
+        var response = await httpClient.PostAsJsonAsync("assistants", request);
         response.EnsureSuccessStatusCode();
-
+        
         var responseContent = await response.Content.ReadAsStringAsync();
-        var result = JsonDocument.Parse(responseContent)
-            .RootElement
-            .GetProperty("choices")[0]
-            .GetProperty("message")
-            .GetProperty("content")
-            .GetString();
+        var assistant = JsonConvert.DeserializeObject<Assistant>(responseContent);
 
-        return result ?? string.Empty;
+        return assistant;
     }
-
-    public async Task<string> SendCustomPromptResponseAsync(string userPrompt, string systemPrompt)
+    
+    public async Task<Completion?> CreateCompletionAsync(string systemPrompt,
+        string userPrompt)
     {
+        // var request = new CompletionRequest
+        // {
+        //     Messages =
+        //     [
+        //         new RequestMessage
+        //         {
+        //             Role = "system", Content = systemPrompt
+        //         },
+        //
+        //         new RequestMessage()
+        //         {
+        //             Role = "user", Content = userPrompt
+        //         }
+        //     ],
+        //     MaxTokens = 100,
+        //     Temperature = 0.7m,
+        //     Store = true
+        // };
+        
         var systemMessage = new
         {
             role = "system", content = systemPrompt
@@ -51,23 +58,19 @@ public class OpenAiClient(HttpClient httpClient) : IOpenAiClient
         
         var requestBody = new
         {
-            model = "gpt-4o",  
+            model = "gpt-4o", 
             messages = (object[])[systemMessage, userMessage],
-            max_tokens = 100,            // Adjust this according to your needs
-            temperature = 0.7            // Controls creativity; higher values produce more varied outputs
+            max_tokens = 100,            
+            temperature = 0.7,            
+            store = true
         };
 
         var response = await httpClient.PostAsJsonAsync("chat/completions", requestBody);
         response.EnsureSuccessStatusCode();
 
         var responseContent = await response.Content.ReadAsStringAsync();
-        var result = JsonDocument.Parse(responseContent)
-            .RootElement
-            .GetProperty("choices")[0]
-            .GetProperty("message")
-            .GetProperty("content")
-            .GetString();
+        var result = JsonConvert.DeserializeObject<Completion>(responseContent);
 
-        return result ?? string.Empty;
+        return result;
     }
 }

@@ -1,56 +1,20 @@
 using System.Net.Http.Json;
-using Infrastructure.Clients.Models;
-using Newtonsoft.Json;
 
 namespace Infrastructure.Clients;
 
 public class OpenAiClient(HttpClient httpClient) : IOpenAiClient
 {
-    public async Task<Assistant?> CreateAssistantAsync(string name, string description, string instructions)
+    public async Task<TResponse?> PostAsync<TRequest, TResponse>(string endpoint, TRequest body) where TRequest : class
     {
-        var request = new
-        {
-            name,
-            description,
-            instructions, 
-            model = "gpt-4o"
-        };
-        
-        var response = await httpClient.PostAsJsonAsync("assistants", request);
+        var response = await httpClient.PostAsJsonAsync(endpoint, body);
         response.EnsureSuccessStatusCode();
-        
-        var assistant = await response.Content.ReadFromJsonAsync<Assistant>();
-
-        return assistant;
+        return await response.Content.ReadFromJsonAsync<TResponse>();
     }
-    
-    public async Task<Completion?> CreateCompletionAsync(string systemPrompt,
-        string userPrompt)
+
+    public async Task<TResponse?> GetAsync<TResponse>(string endpoint)
     {
-        
-        var systemMessage = new
-        {
-            role = "system", content = systemPrompt
-        };
-        var userMessage = new
-        {
-            role = "user", content = userPrompt
-        };
-        
-        var requestBody = new
-        {
-            model = "gpt-4o", 
-            messages = (object[])[systemMessage, userMessage],
-            max_tokens = 100,            
-            temperature = 0.7,            
-            store = true
-        };
-
-        var response = await httpClient.PostAsJsonAsync("chat/completions", requestBody);
+        var response = await httpClient.GetAsync(endpoint);
         response.EnsureSuccessStatusCode();
-
-        var completion = await response.Content.ReadFromJsonAsync<Completion>();
-
-        return completion;
+        return await response.Content.ReadFromJsonAsync<TResponse>();
     }
 }

@@ -1,48 +1,69 @@
-using Newtonsoft.Json;
+using System.Text.Json.Serialization;
+using Application.Assistants.Dtos;
 
 namespace Infrastructure.Clients.Models;
 
 public class Assistant
 {
-    [JsonProperty("id")]
+    [JsonPropertyName("id")]
     public required string Id { get; set; }
 
-    [JsonProperty("object")]
+    [JsonPropertyName("object")]
     public required string Object { get; set; }
 
-    [JsonProperty("created_at")]
+    [JsonPropertyName("created_at")]
     public long CreatedAt { get; set; }
 
-    [JsonProperty("name")]
+    [JsonPropertyName("name")]
     public string? Name { get; set; }
  
-    [JsonProperty("description")]
+    [JsonPropertyName("description")]
     public string? Description { get; set; }
  
-    [JsonProperty("model")]
+    [JsonPropertyName("model")]
     public required string Model { get; set; }
  
-    [JsonProperty("instructions")]
+    [JsonPropertyName("instructions")]
     public string? Instructions { get; set; }
  
-    [JsonProperty("tools")]
+    [JsonPropertyName("tools")]
     public IEnumerable<Tool> Tools { get; set; } = [];
  
-    [JsonProperty("metadata")]
+    [JsonPropertyName("metadata")]
     public Dictionary<string, string>? Metadata { get; set; }
  
-    [JsonProperty("top_p")]
+    [JsonPropertyName("top_p")]
     public double TopP { get; set; }
  
-    [JsonProperty("temperature")]
+    [JsonPropertyName("temperature")]
     public double Temperature { get; set; }
  
-    [JsonProperty("response_format")]
+    [JsonPropertyName("response_format")]
     public object? ResponseFormat { get; set; }
+
+    internal AssistantDto ToDto()
+    {
+        return new AssistantDto
+        {
+            Id = Id,
+            Name = Name,
+            Description = Description,
+            Instructions = Instructions,
+            CreatedAt = CreatedAt,
+            Model = Model,
+            ObjectType = Object,
+            ResponseFormat = ResponseFormat,
+            Tools = Tools.Select(tool => new AssistantToolDto
+            {
+                Type = tool.Type
+            }),
+            Temperature = Temperature
+        };
+    }
 }
 
 public class Tool
 {
-    [JsonProperty("type")]
+    [JsonPropertyName("type")]
     public required string Type { get; set; }
 }

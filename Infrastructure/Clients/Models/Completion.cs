@@ -1,3 +1,4 @@
+using Application.Completions.Dtos;
 using Newtonsoft.Json;
 
 namespace Infrastructure.Clients.Models;
@@ -24,6 +25,26 @@ public class Completion
 
     [JsonProperty("usage")]
     public Usage? Usage { get; set; }
+
+    internal CompletionDto ToDto()
+    {
+        return new CompletionDto
+        {
+            Id = Id,
+            Object = Object,
+            Created = Created,
+            Model = Model,
+            Choices = Choices.Select(c => new CompletionChoiceDto
+                {
+                    Index = c.Index, Message = new CompletionMessageDto
+                    {
+                        Role = c.Message?.Role,
+                        Content = c.Message?.Content
+                    }
+                })
+                .ToList()
+        };
+    }
 }
 
 public class Choice

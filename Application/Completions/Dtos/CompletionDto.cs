@@ -6,16 +6,16 @@ public class CompletionDto
     public string? Object { get; set; }
     public long Created { get; set; }
     public string? Model { get; set; }
-    public List<Choice> Choices { get; set; } = [];
+    public List<CompletionChoiceDto> Choices { get; set; } = [];
 }
 
-public class Choice
+public class CompletionChoiceDto
 {
     public int Index { get; set; }
-    public Message? Message { get; set; }
+    public CompletionMessageDto? Message { get; set; }
 }
 
-public class Message
+public class CompletionMessageDto
 {
     public string? Role { get; set; }
     public string? Content { get; set; }

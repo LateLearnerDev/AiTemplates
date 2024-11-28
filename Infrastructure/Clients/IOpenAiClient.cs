@@ -4,6 +4,6 @@ namespace Infrastructure.Clients;
 
 public interface IOpenAiClient
 {
-    Task<Assistant?> CreateAssistantAsync(string name, string description, string instructions);
-    Task<Completion?> CreateCompletionAsync(string systemPrompt, string userPrompt);
+    Task<TResponse?> PostAsync<TRequest, TResponse>(string endpoint, TRequest body) where TRequest : class;
+    Task<TResponse?> GetAsync<TResponse>(string endpoint);
 }

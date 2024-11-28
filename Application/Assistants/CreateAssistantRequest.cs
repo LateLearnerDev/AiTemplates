@@ -1,9 +1,6 @@
 using Application.Assistants.Dtos;
 using Application.Assistants.Services;
-using Application.Completions;
-using Application.Completions.Dtos;
 using Application.Completions.Exceptions;
-using Application.Completions.Services;
 using MediatR;
 
 namespace Application.Assistants;

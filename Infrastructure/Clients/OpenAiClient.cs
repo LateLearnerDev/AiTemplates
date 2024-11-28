@@ -19,8 +19,7 @@ public class OpenAiClient(HttpClient httpClient) : IOpenAiClient
         var response = await httpClient.PostAsJsonAsync("assistants", request);
         response.EnsureSuccessStatusCode();
         
-        var responseContent = await response.Content.ReadAsStringAsync();
-        var assistant = JsonConvert.DeserializeObject<Assistant>(responseContent);
+        var assistant = await response.Content.ReadFromJsonAsync<Assistant>();
 
         return assistant;
     }
@@ -28,24 +27,6 @@ public class OpenAiClient(HttpClient httpClient) : IOpenAiClient
     public async Task<Completion?> CreateCompletionAsync(string systemPrompt,
         string userPrompt)
     {
-        // var request = new CompletionRequest
-        // {
-        //     Messages =
-        //     [
-        //         new RequestMessage
-        //         {
-        //             Role = "system", Content = systemPrompt
-        //         },
-        //
-        //         new RequestMessage()
-        //         {
-        //             Role = "user", Content = userPrompt
-        //         }
-        //     ],
-        //     MaxTokens = 100,
-        //     Temperature = 0.7m,
-        //     Store = true
-        // };
         
         var systemMessage = new
         {
@@ -68,9 +49,8 @@ public class OpenAiClient(HttpClient httpClient) : IOpenAiClient
         var response = await httpClient.PostAsJsonAsync("chat/completions", requestBody);
         response.EnsureSuccessStatusCode();
 
-        var responseContent = await response.Content.ReadAsStringAsync();
-        var result = JsonConvert.DeserializeObject<Completion>(responseContent);
+        var completion = await response.Content.ReadFromJsonAsync<Completion>();
 
-        return result;
+        return completion;
     }
 }

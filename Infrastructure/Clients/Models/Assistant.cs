@@ -38,7 +38,7 @@ public class Assistant
     public double Temperature { get; set; }
  
     [JsonProperty("response_format")]
-    public required string ResponseFormat { get; set; }
+    public object? ResponseFormat { get; set; }
 }
 
 public class Tool

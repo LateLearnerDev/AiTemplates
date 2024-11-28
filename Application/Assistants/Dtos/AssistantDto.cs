@@ -13,7 +13,7 @@ public class AssistantDto
     public Dictionary<string, string>? Metadata { get; set; }
     public double TopP { get; set; }
     public double Temperature { get; set; }
-    public required string ResponseFormat { get; set; }
+    public object? ResponseFormat { get; set; }
 }
 
 public class Tool

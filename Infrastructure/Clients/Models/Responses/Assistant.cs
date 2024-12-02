@@ -1,7 +1,7 @@
 using System.Text.Json.Serialization;
 using Application.Assistants.Dtos;
 
-namespace Infrastructure.Clients.Models;
+namespace Infrastructure.Clients.Models.Responses;
 
 public class Assistant
 {
@@ -27,7 +27,7 @@ public class Assistant
     public string? Instructions { get; set; }
  
     [JsonPropertyName("tools")]
-    public IEnumerable<Tool> Tools { get; set; } = [];
+    public IEnumerable<AssistantTool> Tools { get; set; } = [];
  
     [JsonPropertyName("metadata")]
     public Dictionary<string, string>? Metadata { get; set; }
@@ -62,7 +62,7 @@ public class Assistant
     }
 }
 
-public class Tool
+public class AssistantTool
 {
     [JsonPropertyName("type")]
     public required string Type { get; set; }

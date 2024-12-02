@@ -17,6 +17,6 @@ public class CreateAssistantRequestHandler(IAssistantService service) : IRequest
     public async Task<AssistantDto> Handle(CreateAssistantRequest request, CancellationToken cancellationToken)
     {
         var result = await service.CreateAssistantAsync(request.Name, request.Description, request.Instructions);
-        return result ?? throw new CompletionResponseNullException();
+        return result;
     }
 }

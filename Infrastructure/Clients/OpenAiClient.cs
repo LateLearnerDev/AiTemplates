@@ -1,4 +1,5 @@
 using System.Net.Http.Json;
+using System.Text.Json;
 
 namespace Infrastructure.Clients;
 
@@ -16,5 +17,17 @@ public class OpenAiClient(HttpClient httpClient) : IOpenAiClient
         var response = await httpClient.GetAsync(endpoint);
         response.EnsureSuccessStatusCode();
         return await response.Content.ReadFromJsonAsync<TResponse>();
+    }
+
+    public async Task<IEnumerable<TResponse>?> GetListAsync<TResponse>(string endpoint)
+    {
+        var response = await httpClient.GetAsync(endpoint);
+        response.EnsureSuccessStatusCode();
+        var responseContent = await response.Content.ReadAsStringAsync();
+        using var document = JsonDocument.Parse(responseContent);
+
+        return document.RootElement.TryGetProperty("data", out var dataElement)
+            ? JsonSerializer.Deserialize<IEnumerable<TResponse>>(dataElement.GetRawText())
+            : null;
     }
 }

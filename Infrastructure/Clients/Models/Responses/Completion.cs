@@ -1,7 +1,7 @@
 using Application.Completions.Dtos;
 using Newtonsoft.Json;
 
-namespace Infrastructure.Clients.Models;
+namespace Infrastructure.Clients.Models.Responses;
 
 public class Completion
 {

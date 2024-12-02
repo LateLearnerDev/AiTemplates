@@ -3,6 +3,8 @@ using Application.Completions.Services;
 using CommunityToolkit.Diagnostics;
 using Infrastructure.Clients;
 using Infrastructure.Clients.Models;
+using Infrastructure.Clients.Models.Pros;
+using Infrastructure.Clients.Models.Responses;
 
 namespace Infrastructure.Services;
 

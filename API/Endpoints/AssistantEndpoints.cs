@@ -9,6 +9,9 @@ public class AssistantRequests :  IEndPointMapper
     public void MapEndpoints(IEndpointRouteBuilder endpointRouteBuilder)
     {
         endpointRouteBuilder.BuildPath("Assistants")
-            .MediatePost<CreateAssistantRequest, AssistantDto>("/");
+            .MediateGet<GetAssistantsRequest, IEnumerable<AssistantDto>>("/")
+            .MediateGet<GetAssistantRequest, AssistantDto>("/{assistantId}")
+            .MediatePost<CreateAssistantRequest, AssistantDto>("/")
+            .MediatePut<UpdateAssistantRequest, AssistantDto>("/{assistantId}");
     }
 }

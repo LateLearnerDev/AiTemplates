@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace Infrastructure.Clients.Models;
+namespace Infrastructure.Clients.Models.Pros;
 
 public class CreateCompletionPro
 {

@@ -27,6 +27,9 @@ public class ThreadService(IOpenAiClient openAiClient) : IThreadService
 
     public async Task<ThreadDto> GetThreadAsync(string threadId)
     {
-        throw new NotImplementedException();
+        var thread = await openAiClient.GetAsync<Infrastructure.Clients.Models.Responses.Thread>("threads/" + threadId);
+        Guard.IsNotNull(thread);
+        
+        return thread.ToDto();
     }
 }

@@ -1,6 +1,7 @@
 using Application.Assistants.Services;
 using Application.Common.Interfaces;
 using Application.Completions.Services;
+using Application.Threads.Services;
 using Autofac;
 using Infrastructure.Ioc;
 using Infrastructure.Services;
@@ -22,5 +23,8 @@ public class InfrastructureDependencyModule : DependencyResolvingModule
         builder.RegisterType<AssistantService>()
             .As<IAssistantService>()
             .InstancePerLifetimeScope(); 
+        builder.RegisterType<ThreadService>()
+            .As<IThreadService>()
+            .InstancePerLifetimeScope();
     }
 }

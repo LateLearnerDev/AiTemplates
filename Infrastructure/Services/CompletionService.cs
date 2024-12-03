@@ -3,7 +3,7 @@ using Application.Completions.Services;
 using CommunityToolkit.Diagnostics;
 using Infrastructure.Clients;
 using Infrastructure.Clients.Models;
-using Infrastructure.Clients.Models.Pros;
+using Infrastructure.Clients.Models.RequestBodies;
 using Infrastructure.Clients.Models.Responses;
 
 namespace Infrastructure.Services;
@@ -12,9 +12,9 @@ public class CompletionService(IOpenAiClient openAiClient) : ICompletionService
 {
     public async Task<CompletionDto?> CreateCompletionAsync(string systemPrompt, string userPrompt)
     {
-        var systemMessage = new CompletionProMessage { Role = "system", Content = systemPrompt };
-        var userMessage = new CompletionProMessage { Role = "user", Content = userPrompt };
-        var request = new CreateCompletionPro
+        var systemMessage = new CompletionRequestMessage { Role = "system", Content = systemPrompt };
+        var userMessage = new CompletionRequestMessage { Role = "user", Content = userPrompt };
+        var request = new CreateCompletionRequestBody
         {
             Model = "gpt-4o",
             Messages = [systemMessage, userMessage],
@@ -23,7 +23,7 @@ public class CompletionService(IOpenAiClient openAiClient) : ICompletionService
             Store = true
         };
         
-        var response = await openAiClient.PostAsync<CreateCompletionPro, Completion>("chat/completions", request);
+        var response = await openAiClient.PostAsync<CreateCompletionRequestBody, Completion>("chat/completions", request);
         Guard.IsNotNull(response);
 
         return response.ToDto();

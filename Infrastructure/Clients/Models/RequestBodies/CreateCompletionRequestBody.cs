@@ -6,7 +6,7 @@ public class CreateCompletionRequestBody
 {
     [JsonPropertyName("model")] public string Model { get; set; } = "gpt-4o";
 
-    [JsonPropertyName("messages")] public List<CompletionRequestMessage> Messages { get; set; }
+    [JsonPropertyName("messages")] public List<CompletionRequestMessage> Messages { get; set; } = [];
 
     [JsonPropertyName("max_tokens")] public int MaxTokens { get; set; }
 

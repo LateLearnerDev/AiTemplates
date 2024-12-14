@@ -22,18 +22,31 @@ public class MessageService(IOpenAiClient openAiClient) : IMessageService
         return message.ToDto();
     }
 
-    public Task<MessageDto> UpdateAssistantAsync(string threadId, string messageId, List<KeyValuePair<string, string>> metadata)
+    public async Task<MessageDto> UpdateMessageAsync(string threadId, string messageId, Dictionary<string, object> metadata)
     {
-        throw new NotImplementedException();
+        var updatedMessage = await openAiClient.PostAsync<UpdateMessageRequestBody, Message>(
+            $"threads/{threadId}/messages/{messageId}", new UpdateMessageRequestBody
+            {
+                MetaData = metadata
+            });
+        Guard.IsNotNull(updatedMessage);
+        
+        return updatedMessage.ToDto();
     }
 
-    public Task<List<MessageDto>> GetMessagesAsync(string threadId)
+    public async Task<List<MessageDto>> GetMessagesAsync(string threadId)
     {
-        throw new NotImplementedException();
+        var messages = (await openAiClient.GetListAsync<Message>($"threads/{threadId}/messages"))?.ToList();
+        Guard.IsNotNull(messages);
+        
+        return messages.Select(message => message.ToDto()).ToList();
     }
 
-    public Task<MessageDto> GetMessageAsync(string threadId, string messageId)
+    public async Task<MessageDto> GetMessageAsync(string threadId, string messageId)
     {
-        throw new NotImplementedException();
+        var message = await openAiClient.GetAsync<Message>($"threads/{threadId}/messages/{messageId}");
+        Guard.IsNotNull(message);
+        
+        return message.ToDto();
     }
 }

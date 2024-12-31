@@ -1,10 +1,9 @@
-using Application.Assistants.Dtos;
-using Application.Assistants.Services;
+using Application.OpenAi.Assistants.Dtos;
+using Application.OpenAi.Assistants.Services;
 using CommunityToolkit.Diagnostics;
 using Infrastructure.Clients;
 using Infrastructure.Clients.Models;
-using Infrastructure.Clients.Models.RequestBodies;
-using Infrastructure.Clients.Models.Responses;
+using Infrastructure.Clients.Models.OpenAi.Assistants;
 
 namespace Infrastructure.Services;
 

@@ -1,8 +1,9 @@
-using Application.Assistants.Services;
 using Application.Common.Interfaces;
-using Application.Completions.Services;
-using Application.Messages.Services;
-using Application.Threads.Services;
+using Application.OpenAi.Assistants.Services;
+using Application.OpenAi.Completions.Services;
+using Application.OpenAi.Messages.Services;
+using Application.OpenAi.Runs.Services;
+using Application.OpenAi.Threads.Services;
 using Autofac;
 using Infrastructure.Ioc;
 using Infrastructure.Services;
@@ -29,6 +30,9 @@ public class InfrastructureDependencyModule : DependencyResolvingModule
             .InstancePerLifetimeScope();
         builder.RegisterType<MessageService>()
             .As<IMessageService>()
+            .InstancePerLifetimeScope();
+        builder.RegisterType<RunService>()
+            .As<IRunService>()
             .InstancePerLifetimeScope();
     }
 }

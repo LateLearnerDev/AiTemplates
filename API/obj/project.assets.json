@@ -1085,7 +1085,7 @@
           }
         }
       },
-      "Scalar.AspNetCore/1.2.45": {
+      "Scalar.AspNetCore/1.2.64": {
         "type": "package",
         "compile": {
           "lib/net9.0/Scalar.AspNetCore.dll": {
@@ -3663,10 +3663,10 @@
         "postgresql.png"
       ]
     },
-    "Scalar.AspNetCore/1.2.45": {
-      "sha512": "jCOjv8qeT1dWo2lcOVMIFrKLN9t5KVKfk8c9gIaIVKHrwP1Bw2MesrNFUt44oed/r2dfy5ZVf9jIVU0rUc/65Q==",
+    "Scalar.AspNetCore/1.2.64": {
+      "sha512": "uUC7OwVMzAuu46Hb+Bh2Pw1LuaRZMbHuJ3gQ6J+8o/lwt6zUTsKKyd2R3T8hCELe8eUCns8iNQQ+e2Fg4SKhlA==",
       "type": "package",
-      "path": "scalar.aspnetcore/1.2.45",
+      "path": "scalar.aspnetcore/1.2.64",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -3676,7 +3676,7 @@
         "lib/net8.0/Scalar.AspNetCore.xml",
         "lib/net9.0/Scalar.AspNetCore.dll",
         "lib/net9.0/Scalar.AspNetCore.xml",
-        "scalar.aspnetcore.1.2.45.nupkg.sha512",
+        "scalar.aspnetcore.1.2.64.nupkg.sha512",
         "scalar.aspnetcore.nuspec"
       ]
     },
@@ -4912,7 +4912,6 @@
       "packagesPath": "C:\\Users\\rlpov\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\rlpov\\projects\\AiTemplates\\API\\obj\\",
       "projectStyle": "PackageReference",
-      "UsingMicrosoftNETSdk": false,
       "configFilePaths": [
         "C:\\Users\\rlpov\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
@@ -4944,7 +4943,8 @@
         "enableAudit": "true",
         "auditLevel": "low",
         "auditMode": "all"
-      }
+      },
+      "SdkAnalysisLevel": "9.0.100"
     },
     "frameworks": {
       "net9.0": {

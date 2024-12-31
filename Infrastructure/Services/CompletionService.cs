@@ -1,10 +1,9 @@
-using Application.Completions.Dtos;
-using Application.Completions.Services;
+using Application.OpenAi.Completions.Dtos;
+using Application.OpenAi.Completions.Services;
 using CommunityToolkit.Diagnostics;
 using Infrastructure.Clients;
 using Infrastructure.Clients.Models;
-using Infrastructure.Clients.Models.RequestBodies;
-using Infrastructure.Clients.Models.Responses;
+using Infrastructure.Clients.Models.OpenAi.Completion;
 
 namespace Infrastructure.Services;
 

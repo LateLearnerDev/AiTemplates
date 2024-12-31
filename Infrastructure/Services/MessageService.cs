@@ -1,9 +1,8 @@
-using Application.Messages.Dtos;
-using Application.Messages.Services;
+using Application.OpenAi.Messages.Dtos;
+using Application.OpenAi.Messages.Services;
 using CommunityToolkit.Diagnostics;
 using Infrastructure.Clients;
-using Infrastructure.Clients.Models.RequestBodies;
-using Infrastructure.Clients.Models.Responses;
+using Infrastructure.Clients.Models.OpenAi.Messages;
 
 namespace Infrastructure.Services;
 

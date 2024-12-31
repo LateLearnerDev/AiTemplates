@@ -13,7 +13,6 @@
         "packagesPath": "C:\\Users\\rlpov\\.nuget\\packages\\",
         "outputPath": "C:\\Users\\rlpov\\projects\\AiTemplates\\Application\\obj\\",
         "projectStyle": "PackageReference",
-        "UsingMicrosoftNETSdk": false,
         "configFilePaths": [
           "C:\\Users\\rlpov\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
@@ -42,7 +41,8 @@
           "enableAudit": "true",
           "auditLevel": "low",
           "auditMode": "all"
-        }
+        },
+        "SdkAnalysisLevel": "9.0.100"
       },
       "frameworks": {
         "net9.0": {
@@ -90,7 +90,6 @@
         "packagesPath": "C:\\Users\\rlpov\\.nuget\\packages\\",
         "outputPath": "C:\\Users\\rlpov\\projects\\AiTemplates\\Database\\obj\\",
         "projectStyle": "PackageReference",
-        "UsingMicrosoftNETSdk": false,
         "configFilePaths": [
           "C:\\Users\\rlpov\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
@@ -125,7 +124,8 @@
           "enableAudit": "true",
           "auditLevel": "low",
           "auditMode": "all"
-        }
+        },
+        "SdkAnalysisLevel": "9.0.100"
       },
       "frameworks": {
         "net9.0": {
@@ -187,7 +187,6 @@
         "packagesPath": "C:\\Users\\rlpov\\.nuget\\packages\\",
         "outputPath": "C:\\Users\\rlpov\\projects\\AiTemplates\\Domain\\obj\\",
         "projectStyle": "PackageReference",
-        "UsingMicrosoftNETSdk": false,
         "configFilePaths": [
           "C:\\Users\\rlpov\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
@@ -212,7 +211,8 @@
           "enableAudit": "true",
           "auditLevel": "low",
           "auditMode": "all"
-        }
+        },
+        "SdkAnalysisLevel": "9.0.100"
       },
       "frameworks": {
         "net9.0": {
@@ -246,7 +246,6 @@
         "packagesPath": "C:\\Users\\rlpov\\.nuget\\packages\\",
         "outputPath": "C:\\Users\\rlpov\\projects\\AiTemplates\\Infrastructure\\obj\\",
         "projectStyle": "PackageReference",
-        "UsingMicrosoftNETSdk": false,
         "configFilePaths": [
           "C:\\Users\\rlpov\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
@@ -278,7 +277,8 @@
           "enableAudit": "true",
           "auditLevel": "low",
           "auditMode": "all"
-        }
+        },
+        "SdkAnalysisLevel": "9.0.100"
       },
       "frameworks": {
         "net9.0": {

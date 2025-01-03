@@ -17,8 +17,8 @@ public class RunService(IOpenAiClient openAiClient) : IRunService
             });
         Guard.IsNotNull(run);
 
-        var finishedRun = await PollRunUntilCompletedAsync(run.Id, threadId);
-        return finishedRun.ToDto();
+        var completedRun = await PollRunUntilCompletedAsync(run.Id, threadId);
+        return completedRun.ToDto();
     }
     
     private async Task<Run> PollRunUntilCompletedAsync(string runId, string threadId, int delayInSeconds = 2, int maxRetries = 30)

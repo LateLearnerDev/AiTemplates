@@ -4,6 +4,7 @@ using Application.OpenAi.Completions.Services;
 using Application.OpenAi.Messages.Services;
 using Application.OpenAi.Runs.Services;
 using Application.OpenAi.Threads.Services;
+using Application.SchemaSummariser.Services;
 using Autofac;
 using Infrastructure.Ioc;
 using Infrastructure.Services;
@@ -33,6 +34,10 @@ public class InfrastructureDependencyModule : DependencyResolvingModule
             .InstancePerLifetimeScope();
         builder.RegisterType<RunService>()
             .As<IRunService>()
+            .InstancePerLifetimeScope();
+        
+        builder.RegisterType<SchemaSummariserService>()
+            .As<ISchemaSummariserService>()
             .InstancePerLifetimeScope();
     }
 }

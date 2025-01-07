@@ -4,7 +4,7 @@ using Infrastructure.Extensions.Endpoints;
 
 namespace API.Endpoints.OpenAi;
 
-public class AssistantRequests :  IEndPointMapper
+public class AssistantRequests : IEndPointMapper
 {
     public void MapEndpoints(IEndpointRouteBuilder endpointRouteBuilder)
     {

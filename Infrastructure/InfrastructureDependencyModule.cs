@@ -1,4 +1,5 @@
 using Application.Common.Interfaces;
+using Application.EnglishToSql;
 using Application.OpenAi.Assistants.Services;
 using Application.OpenAi.Completions.Services;
 using Application.OpenAi.Messages.Services;
@@ -38,6 +39,10 @@ public class InfrastructureDependencyModule : DependencyResolvingModule
         
         builder.RegisterType<SchemaSummariserService>()
             .As<ISchemaSummariserService>()
+            .InstancePerLifetimeScope();
+        
+        builder.RegisterType<RawSqlService>()
+            .As<IRawSqlService>()
             .InstancePerLifetimeScope();
     }
 }

@@ -12,7 +12,7 @@ public class RawSqlService(AiTemplatesDbContext dbContext) : IRawSqlService
     {
         var connection = dbContext.Database.GetDbConnection();
 
-        using var command = connection.CreateCommand();
+        await using var command = connection.CreateCommand();
         command.CommandText = sql;
 
         if (connection.State != ConnectionState.Open)
@@ -20,10 +20,10 @@ public class RawSqlService(AiTemplatesDbContext dbContext) : IRawSqlService
             await connection.OpenAsync();
         }
 
-        using var reader = await command.ExecuteReaderAsync();
+        await using var reader = await command.ExecuteReaderAsync();
         var results = new List<ExpandoObject>();
 
-        while (reader.Read())
+        while (await reader.ReadAsync())
         {
             var row = new ExpandoObject() as IDictionary<string, object>;
             for (var i = 0; i < reader.FieldCount; i++)

@@ -12,19 +12,15 @@ public class UserMap : IEntityTypeConfiguration<User>
 
         builder.HasKey(u => u.Id);
         builder.Property(u => u.Id)
-            .ValueGeneratedOnAdd()  // Identity column for PostgreSQL
-            .HasColumnType("integer");
+            .ValueGeneratedOnAdd();
 
         builder.Property(u => u.FirstName)
-            .IsRequired()
-            .HasColumnType("text");
+            .IsRequired();
 
         builder.Property(u => u.LastName) 
-            .IsRequired()
-            .HasColumnType("text");
+            .IsRequired();
 
-        builder.Property(u => u.LoginId)
-            .HasColumnType("integer");  // Nullable foreign key
+        builder.Property(u => u.LoginId);  
         builder.HasIndex(u => u.LoginId);
         builder.HasOne(u => u.LoginDetails)
             .WithMany() 

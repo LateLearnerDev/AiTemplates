@@ -29,7 +29,10 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddOpenApi();
 
 builder.Services.AddDbContext<AiTemplatesDbContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("PostgresConnection")));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("LateLearnerDevServer")));
+// builder.Services.AddDbContext<AiTemplatesDbContext>(options =>
+//     options.UseNpgsql(builder.Configuration.GetConnectionString("PostgresConnection")));
+
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(ApplicationAssembly).Assembly));
 
 builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());

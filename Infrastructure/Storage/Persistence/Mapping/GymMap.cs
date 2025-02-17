@@ -10,16 +10,12 @@ public class GymMap : IEntityTypeConfiguration<Gym>
     {
         builder.ToTable("Gyms");
 
-        // Primary key with auto-increment (PostgreSQL identity)
         builder.HasKey(g => g.Id);
         builder.Property(g => g.Id)
-            .ValueGeneratedOnAdd()  // Identity column for PostgreSQL
-            .HasColumnType("integer");
+            .ValueGeneratedOnAdd();
 
-        // Name property (required, text type)
         builder.Property(g => g.Name)
-            .IsRequired()  // Required
-            .HasColumnType("text");
+            .IsRequired();
     }
 }
 

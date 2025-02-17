@@ -8,42 +8,29 @@ public class WorkoutExerciseSetMap : IEntityTypeConfiguration<WorkoutExerciseSet
 {
     public void Configure(EntityTypeBuilder<WorkoutExerciseSet> builder)
     {
-        // Table mapping
         builder.ToTable("WorkoutExerciseSets");
 
-        // Primary key with auto-increment (PostgreSQL identity)
         builder.HasKey(wes => wes.Id);
         builder.Property(wes => wes.Id)
-            .ValueGeneratedOnAdd()  // Identity column for PostgreSQL
-            .HasColumnType("integer");
+            .ValueGeneratedOnAdd();
 
-        // RepCount property (required, integer)
         builder.Property(wes => wes.RepCount)
-            .IsRequired()
-            .HasColumnType("integer");
+            .IsRequired();
 
-        // SetNumber property (required, integer)
         builder.Property(wes => wes.SetNumber)
-            .IsRequired()
-            .HasColumnType("integer");
-
-        // Weight property (required, integer)
+            .IsRequired();
+        
         builder.Property(wes => wes.Weight)
-            .IsRequired()
-            .HasColumnType("integer");
+            .IsRequired();
 
-        // WorkoutExerciseId property (required foreign key, integer)
         builder.Property(wes => wes.WorkoutExerciseId)
-            .IsRequired()
-            .HasColumnType("integer");
+            .IsRequired();
 
-        // Foreign key relationships
-        builder.HasIndex(wes => wes.WorkoutExerciseId);  // Index on WorkoutExerciseId
+        builder.HasIndex(wes => wes.WorkoutExerciseId); 
 
-        // Foreign key to WorkoutExercise (required)
         builder.HasOne(wes => wes.WorkoutExercise)
-            .WithMany(we => we.WorkoutExerciseSets)  // Assuming WorkoutExercise has WorkoutExerciseSets collection
+            .WithMany(we => we.WorkoutExerciseSets) 
             .HasForeignKey(wes => wes.WorkoutExerciseId)
-            .OnDelete(DeleteBehavior.Cascade);  // Cascade delete on WorkoutExercise deletion
+            .OnDelete(DeleteBehavior.Cascade); 
     }
 }

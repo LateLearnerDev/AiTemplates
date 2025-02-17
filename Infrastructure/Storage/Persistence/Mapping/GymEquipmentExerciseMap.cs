@@ -8,38 +8,28 @@ public class GymEquipmentExerciseMap : IEntityTypeConfiguration<GymEquipmentExer
 {
     public void Configure(EntityTypeBuilder<GymEquipmentExercise> builder)
     {
-        // Table mapping
         builder.ToTable("GymEquipmentExercises");
 
-        // Primary key with auto-increment (PostgreSQL identity)
         builder.HasKey(gee => gee.Id);
         builder.Property(gee => gee.Id)
-            .ValueGeneratedOnAdd()  // Identity column for PostgreSQL
-            .HasColumnType("integer");
+            .ValueGeneratedOnAdd();
 
-        // ExerciseId property (required foreign key, integer)
         builder.Property(gee => gee.ExerciseId)
-            .IsRequired()
-            .HasColumnType("integer");
+            .IsRequired();
 
-        // GymEquipmentId property (required foreign key, integer)
         builder.Property(gee => gee.GymEquipmentId)
-            .IsRequired()
-            .HasColumnType("integer");
+            .IsRequired();
 
-        // Foreign key relationships
-        builder.HasIndex(gee => gee.ExerciseId);  // Index on ExerciseId
-        builder.HasIndex(gee => gee.GymEquipmentId);  // Index on GymEquipmentId
-
-        // Foreign key to Exercise
+        builder.HasIndex(gee => gee.ExerciseId);  
+        builder.HasIndex(gee => gee.GymEquipmentId);  
+        
         builder.HasOne(gee => gee.Exercise)
-            .WithMany(e => e.GymEquipmentExercises)  // Assuming Exercise has GymEquipmentExercises collection
+            .WithMany(e => e.GymEquipmentExercises)  
             .HasForeignKey(gee => gee.ExerciseId)
-            .OnDelete(DeleteBehavior.Cascade);  // Cascade delete on Exercise deletion
-
-        // Foreign key to GymEquipment
+            .OnDelete(DeleteBehavior.Cascade);  
+        
         builder.HasOne(gee => gee.GymEquipment)
-            .WithMany(ge => ge.GymEquipmentExercises)  // Assuming GymEquipment has GymEquipmentExercises collection
+            .WithMany(ge => ge.GymEquipmentExercises)  
             .HasForeignKey(gee => gee.GymEquipmentId)
             .OnDelete(DeleteBehavior.Cascade); 
     }

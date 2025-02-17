@@ -10,26 +10,19 @@ public class GymEquipmentMap : IEntityTypeConfiguration<GymEquipment>
     {
         builder.ToTable("GymEquipments");
 
-        // Primary key with auto-increment (PostgreSQL identity)
         builder.HasKey(ge => ge.Id);
         builder.Property(ge => ge.Id)
-            .ValueGeneratedOnAdd()  // Identity column for PostgreSQL
-            .HasColumnType("integer");
+            .ValueGeneratedOnAdd();
 
-        // GymId property (required foreign key, integer)
         builder.Property(ge => ge.GymId)
-            .IsRequired()
-            .HasColumnType("integer");
+            .IsRequired();
 
-        // Name property (required, text type)
         builder.Property(ge => ge.Name)
-            .IsRequired()  // Required
-            .HasColumnType("text");
+            .IsRequired();
 
-        // Foreign key relationship with Gym
-        builder.HasIndex(ge => ge.GymId);  // Index on GymId
+        builder.HasIndex(ge => ge.GymId);  
         builder.HasOne(ge => ge.Gym)
-            .WithMany(g => g.GymEquipments)  // Assuming Gym has a GymEquipments collection
+            .WithMany(g => g.GymEquipments)  
             .HasForeignKey(ge => ge.GymId)
             .OnDelete(DeleteBehavior.Cascade);  
     }

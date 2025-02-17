@@ -16,10 +16,10 @@ public class DesignTimeDbContextFactory : IDesignTimeDbContextFactory<AiTemplate
             .Build();
 
         // Create DbContextOptionsBuilder with the connection string
-        var connectionString = configuration.GetConnectionString("PostgresConnection");
+        var connectionString = configuration.GetConnectionString("LateLearnerDevServer");
         var optionsBuilder = new DbContextOptionsBuilder<AiTemplatesDbContext>();
-        // optionsBuilder.UseMySQL(connectionString);
-        optionsBuilder.UseNpgsql(connectionString, b => b.MigrationsAssembly("Database")); 
+        // optionsBuilder.UseSqlServer(connectionString!);
+        optionsBuilder.UseSqlServer(connectionString, b => b.MigrationsAssembly("Database")); 
 
         return new AiTemplatesDbContext(optionsBuilder.Options);
     }

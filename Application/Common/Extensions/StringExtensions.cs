@@ -7,10 +7,10 @@ public static partial class StringExtensions
         if (string.IsNullOrWhiteSpace(rawSql))
             return string.Empty;
 
-        return MyRegex().Replace(rawSql, " ")
+        return MarkdownNewLinesAndSpacesRegex().Replace(rawSql, " ")
             .Trim();
     }
 
     [System.Text.RegularExpressions.GeneratedRegex(@"```sql|```|\n|\r")]
-    private static partial System.Text.RegularExpressions.Regex MyRegex();
+    private static partial System.Text.RegularExpressions.Regex MarkdownNewLinesAndSpacesRegex();
 }

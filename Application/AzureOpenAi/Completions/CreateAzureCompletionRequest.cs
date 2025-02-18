@@ -18,7 +18,7 @@ public class CreateAzureCompletionRequestHandler(IConfiguration configuration) :
     public async Task<ChatMessageContent> Handle(CreateAzureCompletionRequest request, CancellationToken cancellationToken)
     {
         var endpoint = configuration["AzureOpenAiBaseEndpoint"];
-        var key = configuration["AzureOpenAiKey"];
+        var key = configuration["AzureOpenAiApiKey"];
         var azureOpenAiClient = new AzureOpenAIClient(new Uri(endpoint),
             new ApiKeyCredential(key));
         var completionClient = azureOpenAiClient.GetChatClient("gpt-4o-mini");

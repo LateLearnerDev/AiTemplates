@@ -3,6 +3,7 @@ using API.Exceptions;
 using Application;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
+using Azure.Identity;
 using Infrastructure;
 using Infrastructure.Storage.Persistence.Context;
 using Microsoft.EntityFrameworkCore;
@@ -41,7 +42,10 @@ builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder =>
     containerBuilder.RegisterModule(new InfrastructureDependencyModule());
 });
 
-builder.Services.AddOpenAiClient(builder.Configuration["OPENAI_API_KEY"] ?? throw new MissingApiKeyException());
+var keyVaultUri = new Uri($"https://{builder.Configuration["AzureKeyVaultName"]}.vault.azure.net/");
+builder.Configuration.AddAzureKeyVault(keyVaultUri, new DefaultAzureCredential());
+var openAiApiKey = builder.Configuration["OpenAiApiKey"];
+builder.Services.AddOpenAiClient(openAiApiKey ?? throw new MissingApiKeyException());
 
 var app = builder.Build();
 app.UseCors("AllowAllOrigins");

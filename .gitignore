@@ -60,3 +60,4 @@ Migrations/
 # Gitkraken and other temporary files
 *.gitkraken
 
+secrets.json

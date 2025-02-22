@@ -40,8 +40,8 @@ export const SubmitEnglishToSqlForm: FC = () => {
                             <Select
                                 defaultValue={1}
                                 options={[
-                                    {label: 'Azure OpenAi Gpt 4o-Mini', value: AiServiceSelection.AzureOpenAiGpt4oMini},
-                                    {label: 'LocallyHosted (WIP)', value: AiServiceSelection.LocallyHosted}
+                                    {label: 'Azure OpenAi Gpt 4o-Mini', value: AiServiceSelection.AZURE_OPENAI_GPT4o_MINI},
+                                    {label: 'LocallyHosted (WIP)', value: AiServiceSelection.LOCALLY_HOSTED}
                                 ]}
                                 menuMaxHeight={160}
                                 width={250}
@@ -56,9 +56,9 @@ export const SubmitEnglishToSqlForm: FC = () => {
                             <Select
                                 defaultValue={1}
                                 options={[
-                                    {label: 'Simple Schema', value: SchemaSelection.SimpleSchema},
-                                    {label: 'Complex Schema (WIP)', value: SchemaSelection.ComplexSchema},
-                                    {label: 'Custom Schema(WIP)', value: SchemaSelection.CustomSchema}
+                                    {label: 'Simple Schema', value: SchemaSelection.SIMPLE_SCHEMA},
+                                    {label: 'Complex Schema (WIP)', value: SchemaSelection.COMPLEX_SCHEMA},
+                                    {label: 'Custom Schema(WIP)', value: SchemaSelection.CUSTOM_SCHEMA}
                                 ]}
                                 menuMaxHeight={160}
                                 width={250}
@@ -75,9 +75,9 @@ export const SubmitEnglishToSqlForm: FC = () => {
                             style={{width: 150, height: 50}}
                             primary
                             onClick={() => (!!schemaSelected && !!serviceSelected) && submitEnglishToSqlMutation.mutate({
-                                SchemaSelection: schemaSelected,
-                                AiServiceSelection: serviceSelected,
-                                UserQuery: userQuery
+                                schemaSelection: schemaSelected,
+                                aiServiceSelection: serviceSelected,
+                                userQuery: userQuery
                             })}
                         >
                             Submit

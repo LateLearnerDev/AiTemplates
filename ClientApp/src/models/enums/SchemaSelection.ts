@@ -1,6 +1,6 @@
 export enum SchemaSelection
 {
-    SimpleSchema = 1,
-    ComplexSchema = 2,
-    CustomSchema = 3
+    SIMPLE_SCHEMA = 1,
+    COMPLEX_SCHEMA = 2,
+    CUSTOM_SCHEMA = 3
 }

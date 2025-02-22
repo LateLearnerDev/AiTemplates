@@ -1,4 +1,4 @@
 export enum AiServiceSelection {
-    AzureOpenAiGpt4oMini = 1,
-    LocallyHosted = 2,
+    AZURE_OPENAI_GPT4o_MINI = 1,
+    LOCALLY_HOSTED = 2,
 }

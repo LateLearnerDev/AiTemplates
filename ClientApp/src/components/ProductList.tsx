@@ -1,8 +1,6 @@
 import {FC, useEffect} from "react";
 import {useProductQuery} from "../data/hooks/useProductsQuery.ts";
 
-
-
 const ProductList: FC = () => {
     const {data: products, isLoading, error} = useProductQuery();
     

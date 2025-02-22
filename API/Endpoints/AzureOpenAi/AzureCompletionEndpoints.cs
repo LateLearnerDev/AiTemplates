@@ -9,6 +9,6 @@ public class AzureCompletionEndpoints : IEndPointMapper
     public void MapEndpoints(IEndpointRouteBuilder endpointRouteBuilder)
     {
         endpointRouteBuilder.BuildPath("AzureCompletions")
-            .MediatePost<CreateAzureCompletionRequest, ChatMessageContent>("/");
+            .MediatePost<CreateAzureCompletionRequest, ChatCompletion>("/");
     }
 }

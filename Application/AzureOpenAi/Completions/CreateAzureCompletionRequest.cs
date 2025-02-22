@@ -7,15 +7,15 @@ using OpenAI.Chat;
 
 namespace Application.AzureOpenAi.Completions;
 
-public class CreateAzureCompletionRequest : IRequest<ChatMessageContent>
+public class CreateAzureCompletionRequest : IRequest<ChatCompletion>
 {
     public required string SystemPrompt { get; set; }
     public required string UserPrompt { get; set; }
 }
 
-public class CreateAzureCompletionRequestHandler(IConfiguration configuration) : IRequestHandler<CreateAzureCompletionRequest, ChatMessageContent>
+public class CreateAzureCompletionRequestHandler(IConfiguration configuration) : IRequestHandler<CreateAzureCompletionRequest, ChatCompletion>
 {
-    public async Task<ChatMessageContent> Handle(CreateAzureCompletionRequest request, CancellationToken cancellationToken)
+    public async Task<ChatCompletion> Handle(CreateAzureCompletionRequest request, CancellationToken cancellationToken)
     {
         var endpoint = configuration["AzureOpenAiBaseEndpoint"];
         var key = configuration["AzureOpenAiApiKey"];
@@ -34,8 +34,7 @@ public class CreateAzureCompletionRequestHandler(IConfiguration configuration) :
            Temperature = 0.5f,
            MaxOutputTokenCount = 800
         }, cancellationToken: cancellationToken);
-
-
-        return response.Value.Content;
+        
+        return response.Value;
     }
 }

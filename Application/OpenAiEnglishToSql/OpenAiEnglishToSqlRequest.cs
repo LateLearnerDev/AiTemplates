@@ -1,6 +1,6 @@
 using Application.Common.Extensions;
+using Application.EnglishToSql;
 using Application.OpenAi.Assistants.Services;
-using Application.OpenAi.Messages.Dtos;
 using Application.OpenAi.Messages.Services;
 using Application.OpenAi.Runs.Services;
 using Application.OpenAi.Threads.Pros;
@@ -8,18 +8,18 @@ using Application.OpenAi.Threads.Services;
 using Application.SchemaSummariser.Services;
 using MediatR;
 
-namespace Application.EnglishToSql;
+namespace Application.OpenAiEnglishToSql;
 
-public class EnglishToSqlRequest : IRequest<List<string>>
+public class OpenAiEnglishToSqlRequest : IRequest<List<string>>
 {
     public required string UserMessage { get; set; }
 }
 
-public class EnglishToSqlRequestHandler(IThreadService threadService, IMessageService messageService,
+public class OpenAiEnglishToSqlRequestHandler(IThreadService threadService, IMessageService messageService,
     IRunService runService, IAssistantService assistantService, ISchemaSummariserService schemaSummariserService,
-    IRawSqlService rawSqlService) : IRequestHandler<EnglishToSqlRequest, List<string>>
+    IRawSqlService rawSqlService) : IRequestHandler<OpenAiEnglishToSqlRequest, List<string>>
 {
-    public async Task<List<string>> Handle(EnglishToSqlRequest request, CancellationToken cancellationToken)
+    public async Task<List<string>> Handle(OpenAiEnglishToSqlRequest request, CancellationToken cancellationToken)
     {
         var schema = schemaSummariserService.GetSummarizedSchema();
         // Todo: Change these to use the already made mediatr requests instead

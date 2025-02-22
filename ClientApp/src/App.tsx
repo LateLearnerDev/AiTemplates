@@ -42,6 +42,7 @@ function App() {
             <GlobalStyles/>
             <ThemeProvider theme={original}>
                 <SubmitEnglishToSqlForm/>
+                
             </ThemeProvider>
         </QueryClientProvider>
     )

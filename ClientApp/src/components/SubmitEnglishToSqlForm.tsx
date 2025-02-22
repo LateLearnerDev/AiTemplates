@@ -1,38 +1,35 @@
-import {FC, useEffect, useState} from "react";
+import {FC, useState} from "react";
 import {Button, GroupBox, Select, TextInput, Window, WindowContent} from "react95";
 import {AiServiceSelection} from "../models/enums/AiServiceSelection.ts";
 import {SchemaSelection} from "../models/enums/SchemaSelection.ts";
 import {useEnglishToSqlMutation} from "../data/hooks/useEngilshToSqlQuery.ts";
+import {LoadingBar} from "./global/LoadingBar.tsx";
+import {SubmitEnglishToSqlResults} from "./SubmitEnglishToSqlResults.tsx";
+import {IEnglishToSqlDto} from "../models/IEnglishToSqlDto.ts";
 
 
 export const SubmitEnglishToSqlForm: FC = () => {
-    const [serviceSelected, setServiceSelected] = useState<AiServiceSelection>();
-    const [schemaSelected, setSchemeSelecteed] = useState<SchemaSelection>();
+    const [serviceSelected, setServiceSelected] = useState<AiServiceSelection>(1);
+    const [schemaSelected, setSchemeSelected] = useState<SchemaSelection>(1);
     const [userQuery, setUserQuery] = useState<string>('');
+    // const [showResults, setShowResults] = useState<boolean>(false);
+    const [results, setResults] = useState<IEnglishToSqlDto>();
 
     const submitEnglishToSqlMutation = useEnglishToSqlMutation();
 
-    useEffect(() => {
-        console.log(userQuery);
-    }, [userQuery])
-
-    useEffect(() => {
-        console.log({"SCHEMA SELECTED: ": schemaSelected});
-    }, [schemaSelected]);
-    
     return <>
-        <Window style={{width: 600, height: 500}}>
+        {submitEnglishToSqlMutation.isPending && <LoadingBar/>}
+        {!results && <Window style={{width: 600, height: 500}}>
             <WindowContent>
                 <GroupBox label='English Query'>
                     <TextInput
                         multiline
                         rows={12}
-                        defaultValue={"Please enter your request..."}
+                        placeholder={"Please enter your request..."}
                         fullWidth
                         onChange={e => setUserQuery(e.target.value)}
                     />
                 </GroupBox>
-
                 <br/>
                 <GroupBox label='Setup'>
                     <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
@@ -40,7 +37,10 @@ export const SubmitEnglishToSqlForm: FC = () => {
                             <Select
                                 defaultValue={1}
                                 options={[
-                                    {label: 'Azure OpenAi Gpt 4o-Mini', value: AiServiceSelection.AZURE_OPENAI_GPT4o_MINI},
+                                    {
+                                        label: 'Azure OpenAi Gpt 4o-Mini',
+                                        value: AiServiceSelection.AZURE_OPENAI_GPT4o_MINI
+                                    },
                                     {label: 'LocallyHosted (WIP)', value: AiServiceSelection.LOCALLY_HOSTED}
                                 ]}
                                 menuMaxHeight={160}
@@ -63,7 +63,7 @@ export const SubmitEnglishToSqlForm: FC = () => {
                                 menuMaxHeight={160}
                                 width={250}
                                 onChange={e => {
-                                    setSchemeSelecteed(e.value);
+                                    setSchemeSelected(e.value);
                                 }}
                                 onOpen={e => console.log('open', e)}
                                 onClose={e => console.log('close', e)}
@@ -74,23 +74,29 @@ export const SubmitEnglishToSqlForm: FC = () => {
                         <Button
                             style={{width: 150, height: 50}}
                             primary
-                            onClick={() => (!!schemaSelected && !!serviceSelected) && submitEnglishToSqlMutation.mutate({
-                                schemaSelection: schemaSelected,
-                                aiServiceSelection: serviceSelected,
-                                userQuery: userQuery
-                            })}
+                            onClick={async () => {
+                                if (!!schemaSelected && !!serviceSelected) {
+                                    const response = await submitEnglishToSqlMutation.mutateAsync({
+                                        schemaSelection: schemaSelected,
+                                        aiServiceSelection: serviceSelected,
+                                        userQuery: userQuery
+                                    });
+                                    
+                                    setResults(response.data);
+                                }
+                            }}
                         >
                             Submit
                         </Button>
                     </div>
                 </GroupBox>
-                {/*<GroupBox label='Disabled' disabled>*/}
-                {/*    Some content here*/}
-                {/*    <span role='img' aria-label='😍'>*/}
-                {/*        😍*/}
-                {/*    </span>*/}
-                {/*</GroupBox>*/}
             </WindowContent>
-        </Window>
+
+        </Window>}
+        {!!results && <SubmitEnglishToSqlResults
+            response={results.response}
+            timeTaken={results.timeTaken}
+            tokenCost={results.tokenCost}
+        />}
     </>;
 }

@@ -12,7 +12,6 @@ export const SubmitEnglishToSqlForm: FC = () => {
     const [serviceSelected, setServiceSelected] = useState<AiServiceSelection>(1);
     const [schemaSelected, setSchemeSelected] = useState<SchemaSelection>(1);
     const [userQuery, setUserQuery] = useState<string>('');
-    // const [showResults, setShowResults] = useState<boolean>(false);
     const [results, setResults] = useState<IEnglishToSqlDto>();
 
     const submitEnglishToSqlMutation = useEnglishToSqlMutation();
@@ -97,6 +96,7 @@ export const SubmitEnglishToSqlForm: FC = () => {
             response={results.response}
             timeTaken={results.timeTaken}
             tokenCost={results.tokenCost}
+            restart={() => setResults(undefined)}
         />}
     </>;
 }

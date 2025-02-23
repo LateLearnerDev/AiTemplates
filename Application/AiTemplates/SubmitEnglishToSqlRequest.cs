@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.Text.Json;
 using Application.AiTemplates.Dtos;
 using Application.AzureOpenAi.Completions;
@@ -39,21 +40,20 @@ public class SubmitEnglishToSqlRequestHandler(ISender sender) : IRequestHandler<
         {
             case SchemaSelection.SimpleSchema:
                 var simpleSchema = await sender.Send(new GetSummarizedSchemaRequest());
+                var stopwatch = Stopwatch.StartNew();
                 var result = await sender.Send(new CreateAzureCompletionRequest
                 {
                     SystemPrompt = GenerateSqlSchemaSystemPrompt(simpleSchema),
                     UserPrompt = request.UserQuery
                 });
-                // var options = new JsonSerializerOptions
-                // {
-                //     Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping // Prevents escaping
-                // };
+                stopwatch.Stop();
+                var elapsedSeconds = stopwatch.Elapsed.TotalSeconds;
                 return new EnglishToSqlDto
                 {
                     // Response = JsonSerializer.Serialize(new { query = result.Content.First().Text.RemoveMarkdownNewLinesAndSpaces() }, options),
                     Response = result.Content.First().Text,
                     TokenCost = result.Usage.TotalTokenCount,
-                    TimeTaken = 1
+                    TimeTaken = Math.Round(elapsedSeconds, 2)
                 };
                 break;
             case SchemaSelection.ComplexSchema:
@@ -74,8 +74,8 @@ public class SubmitEnglishToSqlRequestHandler(ISender sender) : IRequestHandler<
         string GenerateSqlSchemaSystemPrompt(string schema)
         {
             return $"Assistant that converts english to sql upon user request with the following schema: {schema}. " +
-                   $"Only ever return the sql unless you don't understand the request. Please also add double quotes " +
-                   $"to all table and column names";
+                   $"Only ever return the sql unless you don't understand the request. Please assume the user would rather have names " +
+                   $"instead of ids, unless specified otherwise.";
         }
     }
 }

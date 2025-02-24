@@ -9,12 +9,18 @@ import {IEnglishToSqlDto} from "../models/IEnglishToSqlDto.ts";
 
 
 export const SubmitEnglishToSqlForm: FC = () => {
-    const [serviceSelected, setServiceSelected] = useState<AiServiceSelection>(1);
-    const [schemaSelected, setSchemeSelected] = useState<SchemaSelection>(1);
+    const [serviceSelected, setServiceSelected] = useState<AiServiceSelection>(AiServiceSelection.AZURE_OPENAI_GPT4o_MINI);
+    const [schemaSelected, setSchemeSelected] = useState<SchemaSelection>(SchemaSelection.SIMPLE_SCHEMA);
     const [userQuery, setUserQuery] = useState<string>('');
     const [results, setResults] = useState<IEnglishToSqlDto>();
 
     const submitEnglishToSqlMutation = useEnglishToSqlMutation();
+    
+    const restart = () => {
+        setServiceSelected(AiServiceSelection.AZURE_OPENAI_GPT4o_MINI);
+        setSchemeSelected(SchemaSelection.SIMPLE_SCHEMA);
+        setResults(undefined);
+    }
 
     return <>
         {submitEnglishToSqlMutation.isPending && <LoadingBar/>}
@@ -96,7 +102,7 @@ export const SubmitEnglishToSqlForm: FC = () => {
             response={results.response}
             timeTaken={results.timeTaken}
             tokenCost={results.tokenCost}
-            restart={() => setResults(undefined)}
+            restart={restart}
         />}
     </>;
 }

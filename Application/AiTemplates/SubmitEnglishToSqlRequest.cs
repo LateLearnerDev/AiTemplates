@@ -4,6 +4,7 @@ using Application.AiTemplates.Dtos;
 using Application.AzureOpenAi.Completions;
 using Application.Common.Enums;
 using Application.Common.Extensions;
+using Application.QueryRunner;
 using Application.SchemaSummariser;
 using CommunityToolkit.Diagnostics;
 using MediatR;
@@ -18,11 +19,12 @@ public class SubmitEnglishToSqlRequest : IRequest<EnglishToSqlDto>
     public string? CustomSchema { get; set; }
 }
 
-public class SubmitEnglishToSqlRequestHandler(ISender sender) : IRequestHandler<SubmitEnglishToSqlRequest, EnglishToSqlDto>
+public class SubmitEnglishToSqlRequestHandler(ISender sender, IQueryRunnerService queryRunnerService) : IRequestHandler<SubmitEnglishToSqlRequest, EnglishToSqlDto>
 {
     public async Task<EnglishToSqlDto> Handle(SubmitEnglishToSqlRequest request, CancellationToken cancellationToken)
     {
         Guard.IsNotEmpty(request.UserQuery);
+        
         return request.AiServiceSelection switch
         {
             AiServiceSelection.AzureOpenAiGpt4oMini => await SelectSchemaAndSubmit(request),
@@ -47,21 +49,23 @@ public class SubmitEnglishToSqlRequestHandler(ISender sender) : IRequestHandler<
                     UserPrompt = request.UserQuery
                 });
                 stopwatch.Stop();
+                
+                var response = result.Content.First().Text;
+                var queryValidation = await queryRunnerService.ValidateQuery(response);
                 var elapsedSeconds = stopwatch.Elapsed.TotalSeconds;
                 return new EnglishToSqlDto
                 {
-                    // Response = JsonSerializer.Serialize(new { query = result.Content.First().Text.RemoveMarkdownNewLinesAndSpaces() }, options),
-                    Response = result.Content.First().Text,
+                    Response = response,
                     TokenCost = result.Usage.TotalTokenCount,
-                    TimeTaken = Math.Round(elapsedSeconds, 2)
+                    TimeTaken = Math.Round(elapsedSeconds, 2),
+                    Success = queryValidation.Success,
+                    ValidationMessage = queryValidation.ExexutionPlan
                 };
-                break;
             case SchemaSelection.ComplexSchema:
                 return new EnglishToSqlDto
                 {
                     Response = "Complex schema not yet supported"
                 };
-                break;
             case SchemaSelection.CustomSchema:
                 return new EnglishToSqlDto
                 {

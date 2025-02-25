@@ -1,10 +1,11 @@
 using Application.Common.Interfaces;
-using Application.EnglishToSql;
 using Application.OpenAi.Assistants.Services;
 using Application.OpenAi.Completions.Services;
 using Application.OpenAi.Messages.Services;
 using Application.OpenAi.Runs.Services;
 using Application.OpenAi.Threads.Services;
+using Application.OpenAiEnglishToSql;
+using Application.QueryRunner;
 using Application.SchemaSummariser.Services;
 using Autofac;
 using Infrastructure.Ioc;
@@ -41,8 +42,8 @@ public class InfrastructureDependencyModule : DependencyResolvingModule
             .As<ISchemaSummariserService>()
             .InstancePerLifetimeScope();
         
-        builder.RegisterType<RawSqlService>()
-            .As<IRawSqlService>()
+        builder.RegisterType<QueryRunnerService>()
+            .As<IQueryRunnerService>()
             .InstancePerLifetimeScope();
     }
 }

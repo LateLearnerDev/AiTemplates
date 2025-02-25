@@ -1,15 +1,21 @@
-import {FC, useState} from "react";
+import {FC, useEffect, useState} from "react";
 import {Button, GroupBox, TextInput, Window, WindowContent} from "react95";
 
 interface ISubmitEnglishToSqlResultsProps {
     response: string;
     timeTaken: number;
     tokenCost: number;
+    success: boolean;
+    validationMessage: string;
     restart: () => void;
 }
 
 export const SubmitEnglishToSqlResults: FC<ISubmitEnglishToSqlResultsProps> = (props) => {
-    const [response, setResponse] = useState<string>(props.response);    
+    const [response, setResponse] = useState<string>(props.response);
+
+    useEffect(() => {
+        console.log({props: props});
+    }, [props]);
     
     return <>
         {<Window style={{ width: 600, position: 'relative', paddingBottom: '50px' }}>
@@ -30,7 +36,7 @@ export const SubmitEnglishToSqlResults: FC<ISubmitEnglishToSqlResultsProps> = (p
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
                             <GroupBox>
                                 <span style={{ fontWeight: 'bold' }}>Validation:</span>
-                                <span style={{ color: 'green', fontWeight: 'bold' }}> SUCCESS!</span>
+                                <span style={{ color: props.success ? 'green' : 'red', fontWeight: 'bold' }}> {props.success ? ' SUCCESS!' : ' FAILURE!'}</span>
                             </GroupBox>
                             <GroupBox>
                                 <span style={{ fontWeight: 'bold' }}>Time Taken:</span>

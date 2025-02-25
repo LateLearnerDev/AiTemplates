@@ -102,6 +102,8 @@ export const SubmitEnglishToSqlForm: FC = () => {
             response={results.response}
             timeTaken={results.timeTaken}
             tokenCost={results.tokenCost}
+            success={results.success}
+            validationMessage={results.validationMessage}
             restart={restart}
         />}
     </>;

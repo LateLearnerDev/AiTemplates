@@ -1,4 +1,3 @@
-using Application.EnglishToSql;
 using Application.OpenAi.Messages.Dtos;
 using Application.OpenAiEnglishToSql;
 using Infrastructure.Extensions.Endpoints;

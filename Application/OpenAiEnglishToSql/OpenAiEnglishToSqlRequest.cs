@@ -1,10 +1,10 @@
 using Application.Common.Extensions;
-using Application.EnglishToSql;
 using Application.OpenAi.Assistants.Services;
 using Application.OpenAi.Messages.Services;
 using Application.OpenAi.Runs.Services;
 using Application.OpenAi.Threads.Pros;
 using Application.OpenAi.Threads.Services;
+using Application.QueryRunner;
 using Application.SchemaSummariser.Services;
 using MediatR;
 
@@ -17,7 +17,7 @@ public class OpenAiEnglishToSqlRequest : IRequest<List<string>>
 
 public class OpenAiEnglishToSqlRequestHandler(IThreadService threadService, IMessageService messageService,
     IRunService runService, IAssistantService assistantService, ISchemaSummariserService schemaSummariserService,
-    IRawSqlService rawSqlService) : IRequestHandler<OpenAiEnglishToSqlRequest, List<string>>
+    IQueryRunnerService queryRunnerService) : IRequestHandler<OpenAiEnglishToSqlRequest, List<string>>
 {
     public async Task<List<string>> Handle(OpenAiEnglishToSqlRequest request, CancellationToken cancellationToken)
     {
@@ -41,7 +41,7 @@ public class OpenAiEnglishToSqlRequestHandler(IThreadService threadService, IMes
             .Select(x => x.Value.RemoveMarkdownNewLinesAndSpaces())
             .ToList();
 
-        var result = await rawSqlService.RunSql(cleanedText.First());
+        var result = await queryRunnerService.RunSql(cleanedText.First());
 
         return cleanedText;
     }

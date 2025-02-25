@@ -1,5 +1,6 @@
 import {FC, useEffect, useState} from "react";
 import {Button, GroupBox, TextInput, Window, WindowContent} from "react95";
+import {useExecuteSqlMutation} from "../data/hooks/useExecuteSqlQuery.ts";
 
 interface ISubmitEnglishToSqlResultsProps {
     response: string;
@@ -12,6 +13,8 @@ interface ISubmitEnglishToSqlResultsProps {
 
 export const SubmitEnglishToSqlResults: FC<ISubmitEnglishToSqlResultsProps> = (props) => {
     const [response, setResponse] = useState<string>(props.response);
+    
+    const executeSqlMutation = useExecuteSqlMutation();
 
     useEffect(() => {
         console.log({props: props});
@@ -50,7 +53,10 @@ export const SubmitEnglishToSqlResults: FC<ISubmitEnglishToSqlResultsProps> = (p
                         <Button
                             style={{ height: 50, width: 150 }}
                             primary
-                            onClick={() => console.log("execute")}
+                            onClick={async () => executeSqlMutation.mutateAsync({
+                                sqlQuery: props.response
+                            })}
+                            disabled={!props.success || executeSqlMutation.isPending}
                         >
                             Execute!
                         </Button>

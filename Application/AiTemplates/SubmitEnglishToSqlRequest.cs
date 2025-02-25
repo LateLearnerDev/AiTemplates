@@ -38,17 +38,13 @@ public class SubmitEnglishToSqlRequestHandler(ISender sender, IQueryRunnerServic
     
     private async Task<EnglishToSqlDto> SelectSchemaAndSubmitAsync(SubmitEnglishToSqlRequest request)
     {
-        switch (request.SchemaSelection)
+        return request.SchemaSelection switch
         {
-            case SchemaSelection.SimpleSchema:
-                return await HandleSimpleSchemaAsync(request);
-            case SchemaSelection.ComplexSchema:
-                return HandleComplexSchemaAsync();
-            case SchemaSelection.CustomSchema:
-                return HandleCustomSchemaAsync();
-            default:
-                throw new ArgumentOutOfRangeException();
-        }
+            SchemaSelection.SimpleSchema => await HandleSimpleSchemaAsync(request),
+            SchemaSelection.ComplexSchema => HandleComplexSchemaAsync(),
+            SchemaSelection.CustomSchema => HandleCustomSchemaAsync(),
+            _ => throw new ArgumentOutOfRangeException()
+        };
     }
 
     private static EnglishToSqlDto HandleCustomSchemaAsync()
@@ -80,7 +76,10 @@ public class SubmitEnglishToSqlRequestHandler(ISender sender, IQueryRunnerServic
         var result = await sender.Send(completionRequest);
         stopwatch.Stop();
 
-        var response = result.Content.FirstOrDefault()?.Text ?? string.Empty;
+        var response = result.Content
+            .FirstOrDefault()
+            ?.Text
+            .RemoveMarkdownNewLinesAndSpaces() ?? string.Empty;
         var queryValidation = await queryRunnerService.ValidateQueryAsync(response);
 
         return new EnglishToSqlDto

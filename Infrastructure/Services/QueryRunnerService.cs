@@ -13,27 +13,29 @@ public class QueryRunnerService(AiTemplatesDbContext dbContext) : IQueryRunnerSe
 {
     public async Task<List<ExpandoObject>> RunSqlAsync(string sql)
     {
-        var cleanedQuery = sql.RemoveMarkdownNewLinesAndSpaces();
-
         await using var connection = dbContext.Database.GetDbConnection();
         await EnsureConnectionOpenAsync(connection);
 
         await using var command = connection.CreateCommand();
-        command.CommandText = cleanedQuery;
+        command.CommandText = sql;
 
         return await FetchQueryResultsAsync(command);
     }
 
     public async Task<(string, bool)> ValidateQueryAsync(string sql)
     {
-        var cleanedQuery = sql.RemoveMarkdownNewLinesAndSpaces();
+        if (!sql.StartsWith("SELECT", StringComparison.OrdinalIgnoreCase))
+        {
+            return ("Invalid Query: Only SELECT statements are allowed.", false);
+        }
+        
         await using var connection = dbContext.Database.GetDbConnection();
         await connection.OpenAsync();
 
         try
         {
             await EnableExecutionPlanModeAsync(connection);
-            var executionPlan = await GetExecutionPlanAsync(connection, cleanedQuery);
+            var executionPlan = await GetExecutionPlanAsync(connection, sql);
             
             return (executionPlan, true);
         }

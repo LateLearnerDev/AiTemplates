@@ -1,4 +1,5 @@
 using System.Data;
+using System.Data.Common;
 using System.Dynamic;
 using System.Text;
 using Application.Common.Extensions;
@@ -10,21 +11,55 @@ namespace Infrastructure.Services;
 
 public class QueryRunnerService(AiTemplatesDbContext dbContext) : IQueryRunnerService
 {
-    public async Task<List<ExpandoObject>> RunSql(string sql)
+    public async Task<List<ExpandoObject>> RunSqlAsync(string sql)
     {
-        var connection = dbContext.Database.GetDbConnection();
+        var cleanedQuery = sql.RemoveMarkdownNewLinesAndSpaces();
+
+        await using var connection = dbContext.Database.GetDbConnection();
+        await EnsureConnectionOpenAsync(connection);
 
         await using var command = connection.CreateCommand();
-        command.CommandText = sql;
+        command.CommandText = cleanedQuery;
 
+        return await FetchQueryResultsAsync(command);
+    }
+
+    public async Task<(string, bool)> ValidateQueryAsync(string sql)
+    {
+        var cleanedQuery = sql.RemoveMarkdownNewLinesAndSpaces();
+        await using var connection = dbContext.Database.GetDbConnection();
+        await connection.OpenAsync();
+
+        try
+        {
+            await EnableExecutionPlanModeAsync(connection);
+            var executionPlan = await GetExecutionPlanAsync(connection, cleanedQuery);
+            
+            return (executionPlan, true);
+        }
+        catch (Exception e)
+        {
+            return ($"Invalid SQL: {e.Message}", false);
+        }
+        finally
+        {
+            await DisableExecutionPlanModeAsync(connection);
+        }
+    }
+    
+    private static async Task EnsureConnectionOpenAsync(DbConnection connection)
+    {
         if (connection.State != ConnectionState.Open)
         {
             await connection.OpenAsync();
         }
-
-        await using var reader = await command.ExecuteReaderAsync();
+    }
+    
+    private static async Task<List<ExpandoObject>> FetchQueryResultsAsync(DbCommand command)
+    {
         var results = new List<ExpandoObject>();
 
+        await using var reader = await command.ExecuteReaderAsync();
         while (await reader.ReadAsync())
         {
             var row = new ExpandoObject() as IDictionary<string, object>;
@@ -37,45 +72,37 @@ public class QueryRunnerService(AiTemplatesDbContext dbContext) : IQueryRunnerSe
 
         return results;
     }
-
-    public async Task<(string, bool)> ValidateQuery(string sql)
+    
+    private static async Task EnableExecutionPlanModeAsync(DbConnection connection)
+    {
+        await using var command = connection.CreateCommand();
+        command.CommandText = "SET SHOWPLAN_ALL ON";
+        await command.ExecuteNonQueryAsync();
+    }
+    private static async Task DisableExecutionPlanModeAsync(DbConnection connection)
+    {
+        await using var command = connection.CreateCommand();
+        command.CommandText = "SET SHOWPLAN_ALL OFF";
+        await command.ExecuteNonQueryAsync();
+    }
+    
+    private static async Task<string> GetExecutionPlanAsync(DbConnection connection, string cleanedQuery)
     {
         var planResult = new StringBuilder();
-        var queryOnly = sql.RemoveMarkdownNewLinesAndSpaces();
 
-        await using var connection = dbContext.Database.GetDbConnection();
-        await connection.OpenAsync();
+        await using var queryCommand = connection.CreateCommand();
+        queryCommand.CommandText = cleanedQuery;
 
-        try
+        await using var reader = await queryCommand.ExecuteReaderAsync();
+        while (await reader.ReadAsync())
         {
-            await using var enableShowPlanCommand = connection.CreateCommand();
-            enableShowPlanCommand.CommandText = "SET SHOWPLAN_ALL ON";
-            await enableShowPlanCommand.ExecuteNonQueryAsync(); 
-
-            await using var queryCommand = connection.CreateCommand();
-            queryCommand.CommandText = queryOnly;
-
-            await using var reader = await queryCommand.ExecuteReaderAsync();
-            while (await reader.ReadAsync())
+            for (var i = 0; i < reader.FieldCount; i++)
             {
-                for (var i = 0; i < reader.FieldCount; i++)
-                {
-                    planResult.Append($"{reader.GetName(i)}: {reader[i].ToString()} | ");
-                }
-                planResult.AppendLine();
+                planResult.Append($"{reader.GetName(i)}: {reader[i]?.ToString()} | ");
             }
+            planResult.AppendLine();
+        }
 
-            return (planResult.ToString(), true);
-        }
-        catch (Exception e)
-        {
-            return ($"Invalid SQL: {e.Message}", false);
-        }
-        finally
-        {
-            await using var disableShowPlanCommand = connection.CreateCommand();
-            disableShowPlanCommand.CommandText = "SET SHOWPLAN_ALL OFF";
-            await disableShowPlanCommand.ExecuteNonQueryAsync();
-        }
+        return planResult.ToString();
     }
 }

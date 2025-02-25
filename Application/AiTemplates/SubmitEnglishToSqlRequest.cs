@@ -51,7 +51,7 @@ public class SubmitEnglishToSqlRequestHandler(ISender sender, IQueryRunnerServic
                 stopwatch.Stop();
                 
                 var response = result.Content.First().Text;
-                var queryValidation = await queryRunnerService.ValidateQuery(response);
+                var queryValidation = await queryRunnerService.ValidateQueryAsync(response);
                 var elapsedSeconds = stopwatch.Elapsed.TotalSeconds;
                 return new EnglishToSqlDto
                 {

@@ -27,7 +27,7 @@ public class SubmitEnglishToSqlRequestHandler(ISender sender, IQueryRunnerServic
         
         return request.AiServiceSelection switch
         {
-            AiServiceSelection.AzureOpenAiGpt4oMini => await SelectSchemaAndSubmit(request),
+            AiServiceSelection.AzureOpenAiGpt4oMini => await SelectSchemaAndSubmitAsync(request),
             AiServiceSelection.LocallyHosted => new EnglishToSqlDto
             {
                 Response = "Locally hosted service not yet supported"
@@ -36,50 +36,67 @@ public class SubmitEnglishToSqlRequestHandler(ISender sender, IQueryRunnerServic
         };
     }
     
-    private async Task<EnglishToSqlDto> SelectSchemaAndSubmit(SubmitEnglishToSqlRequest request)
+    private async Task<EnglishToSqlDto> SelectSchemaAndSubmitAsync(SubmitEnglishToSqlRequest request)
     {
         switch (request.SchemaSelection)
         {
             case SchemaSelection.SimpleSchema:
-                var simpleSchema = await sender.Send(new GetSummarizedSchemaRequest());
-                var stopwatch = Stopwatch.StartNew();
-                var result = await sender.Send(new CreateAzureCompletionRequest
-                {
-                    SystemPrompt = GenerateSqlSchemaSystemPrompt(simpleSchema),
-                    UserPrompt = request.UserQuery
-                });
-                stopwatch.Stop();
-                
-                var response = result.Content.First().Text;
-                var queryValidation = await queryRunnerService.ValidateQueryAsync(response);
-                var elapsedSeconds = stopwatch.Elapsed.TotalSeconds;
-                return new EnglishToSqlDto
-                {
-                    Response = response,
-                    TokenCost = result.Usage.TotalTokenCount,
-                    TimeTaken = Math.Round(elapsedSeconds, 2),
-                    Success = queryValidation.Success,
-                    ValidationMessage = queryValidation.ExexutionPlan
-                };
+                return await HandleSimpleSchemaAsync(request);
             case SchemaSelection.ComplexSchema:
-                return new EnglishToSqlDto
-                {
-                    Response = "Complex schema not yet supported"
-                };
+                return HandleComplexSchemaAsync();
             case SchemaSelection.CustomSchema:
-                return new EnglishToSqlDto
-                {
-                    Response = "Custom schema not yet supported"
-                };
+                return HandleCustomSchemaAsync();
             default:
                 throw new ArgumentOutOfRangeException();
         }
+    }
 
-        string GenerateSqlSchemaSystemPrompt(string schema)
+    private static EnglishToSqlDto HandleCustomSchemaAsync()
+    {
+        return new EnglishToSqlDto
         {
-            return $"Assistant that converts english to sql upon user request with the following schema: {schema}. " +
-                   $"Only ever return the sql unless you don't understand the request. Please assume the user would rather have names " +
-                   $"instead of ids, unless specified otherwise.";
-        }
+            Response = "Custom schema not yet supported"
+        };
+    }
+
+    private static EnglishToSqlDto HandleComplexSchemaAsync()
+    {
+        return new EnglishToSqlDto
+        {
+            Response = "Complex schema not yet supported"
+        };
+    }
+
+    private async Task<EnglishToSqlDto> HandleSimpleSchemaAsync(SubmitEnglishToSqlRequest request)
+    {
+        var simpleSchema = await sender.Send(new GetSummarizedSchemaRequest());
+
+        var stopwatch = Stopwatch.StartNew();
+        var completionRequest = new CreateAzureCompletionRequest
+        {
+            SystemPrompt = GenerateSqlSchemaSystemPrompt(simpleSchema),
+            UserPrompt = request.UserQuery
+        };
+        var result = await sender.Send(completionRequest);
+        stopwatch.Stop();
+
+        var response = result.Content.FirstOrDefault()?.Text ?? string.Empty;
+        var queryValidation = await queryRunnerService.ValidateQueryAsync(response);
+
+        return new EnglishToSqlDto
+        {
+            Response = response,
+            TokenCost = result.Usage.TotalTokenCount,
+            TimeTaken = Math.Round(stopwatch.Elapsed.TotalSeconds, 2),
+            Success = queryValidation.Success,
+            ValidationMessage = queryValidation.ExexutionPlan
+        };
+    }
+    
+    private static string GenerateSqlSchemaSystemPrompt(string schema)
+    {
+        return $"Assistant that converts english to sql upon user request with the following schema: {schema}. " +
+               $"Only ever return the sql unless you don't understand the request. Please assume the user would rather have names " +
+               $"instead of ids, unless specified otherwise.";
     }
 }

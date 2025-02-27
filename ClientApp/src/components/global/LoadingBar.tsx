@@ -1,7 +1,11 @@
 import { FC, useEffect, useState } from 'react';
 import { Window, WindowHeader, WindowContent, ProgressBar } from 'react95';
 
-export const LoadingBar: FC = () => {
+interface ILoadingBarProps {
+    loadingText?: string;
+}
+
+export const LoadingBar: FC<ILoadingBarProps> = (props) => {
     const [percent, setPercent] = useState<number>(0);
 
     useEffect(() => {
@@ -30,7 +34,7 @@ export const LoadingBar: FC = () => {
         >
             <Window resizable className='window'>
                 <WindowHeader className='window-title'>
-                    <span>Loading..</span>
+                    <span>{props.loadingText ?? "Loading"}...</span>
                 </WindowHeader>
                 <WindowContent>
                     <ProgressBar style={{ height: 30, width: 400 }} variant='tile' value={Math.floor(percent)} />

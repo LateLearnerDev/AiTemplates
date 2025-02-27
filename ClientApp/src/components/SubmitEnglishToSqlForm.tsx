@@ -19,6 +19,7 @@ export const SubmitEnglishToSqlForm: FC = () => {
     const restart = () => {
         setServiceSelected(AiServiceSelection.AZURE_OPENAI_GPT4o_MINI);
         setSchemeSelected(SchemaSelection.SIMPLE_SCHEMA);
+        setUserQuery('');
         setResults(undefined);
     }
 
@@ -81,15 +82,16 @@ export const SubmitEnglishToSqlForm: FC = () => {
                             primary
                             onClick={async () => {
                                 if (!!schemaSelected && !!serviceSelected) {
-                                    const response = await submitEnglishToSqlMutation.mutateAsync({
+                                    const result = await submitEnglishToSqlMutation.mutateAsync({
                                         schemaSelection: schemaSelected,
                                         aiServiceSelection: serviceSelected,
                                         userQuery: userQuery
                                     });
                                     
-                                    setResults(response.data);
+                                    setResults(result.data);
                                 }
                             }}
+                            disabled={!userQuery || submitEnglishToSqlMutation.isPending}
                         >
                             Submit
                         </Button>

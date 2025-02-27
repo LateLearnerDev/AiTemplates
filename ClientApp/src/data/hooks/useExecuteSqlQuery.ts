@@ -7,8 +7,12 @@ export const executeSqlKeys = {
     all: ["executeSql"] as const
 };
 
+export type DynamicRow = {
+    [key: string]: any;
+}
+
 const executeSql = async (request: IExecuteSqlRequest) => {
-    return await axios.post<object>(`${API_URL}/AiTemplates/ExecuteSql`, request);
+    return await axios.post<DynamicRow[]>(`${API_URL}/AiTemplates/ExecuteSql`, request);
 }
 
 export const useExecuteSqlMutation = () => {

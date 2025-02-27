@@ -1,6 +1,8 @@
 import {FC, useEffect, useState} from "react";
 import {Button, GroupBox, TextInput, Window, WindowContent} from "react95";
-import {useExecuteSqlMutation} from "../data/hooks/useExecuteSqlQuery.ts";
+import {DynamicRow, useExecuteSqlMutation} from "../data/hooks/useExecuteSqlQuery.ts";
+import {LoadingBar} from "./global/LoadingBar.tsx";
+import {ExecutedSqlResults} from "./ExecutedSqlResults.tsx";
 
 interface ISubmitEnglishToSqlResultsProps {
     response: string;
@@ -12,16 +14,22 @@ interface ISubmitEnglishToSqlResultsProps {
 }
 
 export const SubmitEnglishToSqlResults: FC<ISubmitEnglishToSqlResultsProps> = (props) => {
-    const [response, setResponse] = useState<string>(props.response);
+    const [aiResponse, setAiResponse] = useState<string>(props.response);
+    const [executedSqlResults, setExecutedSqlResults] = useState<DynamicRow[]>();
     
     const executeSqlMutation = useExecuteSqlMutation();
 
     useEffect(() => {
         console.log({props: props});
     }, [props]);
-    
+
+    useEffect(() => {
+        console.log({results: executedSqlResults});
+    }, [executedSqlResults]);
+
     return <>
-        {<Window style={{ width: 600, position: 'relative', paddingBottom: '50px' }}>
+        {executeSqlMutation.isPending && <LoadingBar loadingText={`Executing`}/>}
+        {!executedSqlResults && <Window style={{width: 600, position: 'relative', paddingBottom: '50px'}}>
             <WindowContent>
                 <GroupBox label='Results'>
                     <TextInput
@@ -29,33 +37,40 @@ export const SubmitEnglishToSqlResults: FC<ISubmitEnglishToSqlResultsProps> = (p
                         rows={10}
                         placeholder={"Ai Result"}
                         fullWidth
-                        value={response}
-                        onChange={() => setResponse(response)}
+                        value={aiResponse}
+                        onChange={() => setAiResponse(aiResponse)}
                     />
                 </GroupBox>
-                <br />
+                <br/>
                 <GroupBox label='Setup'>
-                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                    <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
+                        <div style={{display: 'flex', flexDirection: 'column', gap: '10px'}}>
                             <GroupBox>
-                                <span style={{ fontWeight: 'bold' }}>Validation:</span>
-                                <span style={{ color: props.success ? 'green' : 'red', fontWeight: 'bold' }}> {props.success ? ' SUCCESS!' : ' FAILURE!'}</span>
+                                <span style={{fontWeight: 'bold'}}>Validation:</span>
+                                <span style={{
+                                    color: props.success ? 'green' : 'red',
+                                    fontWeight: 'bold'
+                                }}> {props.success ? ' SUCCESS!' : ' FAILURE!'}</span>
                             </GroupBox>
                             <GroupBox>
-                                <span style={{ fontWeight: 'bold' }}>Time Taken:</span>
-                                <span style={{ color: 'blue', fontWeight: 'bold' }}> {props.timeTaken}</span>
+                                <span style={{fontWeight: 'bold'}}>Time Taken:</span>
+                                <span style={{color: 'blue', fontWeight: 'bold'}}> {props.timeTaken}</span>
                             </GroupBox>
                             <GroupBox>
-                                <span style={{ fontWeight: 'bold' }}>Tokens Used:</span>
-                                <span style={{ color: 'blue', fontWeight: 'bold' }}> {props.tokenCost}</span>
+                                <span style={{fontWeight: 'bold'}}>Tokens Used:</span>
+                                <span style={{color: 'blue', fontWeight: 'bold'}}> {props.tokenCost}</span>
                             </GroupBox>
                         </div>
                         <Button
-                            style={{ height: 50, width: 150 }}
+                            style={{height: 50, width: 150}}
                             primary
-                            onClick={async () => executeSqlMutation.mutateAsync({
-                                sqlQuery: props.response
-                            })}
+                            onClick={async () => {
+                                const result = await executeSqlMutation.mutateAsync({
+                                    sqlQuery: props.response
+                                });
+                                
+                                setExecutedSqlResults(result.data);
+                            }}
                             disabled={!props.success || executeSqlMutation.isPending}
                         >
                             Execute!
@@ -77,5 +92,12 @@ export const SubmitEnglishToSqlResults: FC<ISubmitEnglishToSqlResultsProps> = (p
                 Restart
             </Button>
         </Window>}
+        {!!executedSqlResults && <ExecutedSqlResults
+            data={executedSqlResults}
+            restart={() => {
+                setExecutedSqlResults(undefined);
+                props.restart();
+            }}
+        />}
     </>;
 }

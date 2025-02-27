@@ -13,8 +13,8 @@ namespace Application.AiTemplates;
 
 public class SubmitEnglishToSqlRequest : IRequest<EnglishToSqlDto>
 {
-    public AiServiceSelection AiServiceSelection { get; set; }
-    public SchemaSelection SchemaSelection { get; set; }
+    public required AiServiceSelection AiServiceSelection { get; set; }
+    public required SchemaSelection SchemaSelection { get; set; }
     public required string UserQuery { get; set; }
     public string? CustomSchema { get; set; }
 }
@@ -94,8 +94,8 @@ public class SubmitEnglishToSqlRequestHandler(ISender sender, IQueryRunnerServic
     
     private static string GenerateSqlSchemaSystemPrompt(string schema)
     {
-        return $"Assistant that converts english to sql upon user request with the following schema: {schema}. " +
-               $"Only ever return the sql unless you don't understand the request. Please assume the user would rather have names " +
+        return $"Assistant that converts english to sql for SQL Server upon user request with the following schema: {schema}. " +
+               $"Only ever return the sql, unless you don't understand the request. Please assume the user would rather have names " +
                $"instead of ids, unless specified otherwise.";
     }
 }

@@ -1,31 +1,37 @@
 import {FC, useState} from "react";
-import {Button, GroupBox, Select, TextInput, Window, WindowContent} from "react95";
+import {Button, Checkbox, GroupBox, Select, TextInput, Window, WindowContent} from "react95";
 import {AiServiceSelection} from "../models/enums/AiServiceSelection.ts";
 import {SchemaSelection} from "../models/enums/SchemaSelection.ts";
 import {useEnglishToSqlMutation} from "../data/hooks/useEngilshToSqlQuery.ts";
 import {LoadingBar} from "./global/LoadingBar.tsx";
 import {SubmitEnglishToSqlResults} from "./SubmitEnglishToSqlResults.tsx";
 import {IEnglishToSqlDto} from "../models/IEnglishToSqlDto.ts";
+import {DynamicRow, useValidateAndExecuteSqlMutation} from "../data/hooks/useExecuteSqlQuery.ts";
+import {ExecutedSqlResults} from "./ExecutedSqlResults.tsx";
 
 
 export const SubmitEnglishToSqlForm: FC = () => {
     const [serviceSelected, setServiceSelected] = useState<AiServiceSelection>(AiServiceSelection.AZURE_OPENAI_GPT4o_MINI);
     const [schemaSelected, setSchemeSelected] = useState<SchemaSelection>(SchemaSelection.SIMPLE_SCHEMA);
     const [userQuery, setUserQuery] = useState<string>('');
-    const [results, setResults] = useState<IEnglishToSqlDto>();
+    const [formResults, setFormResults] = useState<IEnglishToSqlDto>();
+    const [executeResults, setExecuteResults] = useState<DynamicRow[]>();
+    const [skipReviewAndExecute, setSkipReviewAndExecute] = useState<boolean>(false);
 
     const submitEnglishToSqlMutation = useEnglishToSqlMutation();
+    const validateAndExecuteSqlMutation = useValidateAndExecuteSqlMutation();
     
     const restart = () => {
         setServiceSelected(AiServiceSelection.AZURE_OPENAI_GPT4o_MINI);
         setSchemeSelected(SchemaSelection.SIMPLE_SCHEMA);
         setUserQuery('');
-        setResults(undefined);
+        setFormResults(undefined);
+        setExecuteResults(undefined);
     }
 
     return <>
-        {submitEnglishToSqlMutation.isPending && <LoadingBar/>}
-        {!results && <Window style={{width: 600, height: 500}}>
+        {(submitEnglishToSqlMutation.isPending || validateAndExecuteSqlMutation.isPending) && <LoadingBar/>}
+        {(!formResults && !executeResults) && <Window style={{width: 600, height: 500}}>
             <WindowContent>
                 <GroupBox label='English Query'>
                     <TextInput
@@ -82,30 +88,47 @@ export const SubmitEnglishToSqlForm: FC = () => {
                             primary
                             onClick={async () => {
                                 if (!!schemaSelected && !!serviceSelected) {
-                                    const result = await submitEnglishToSqlMutation.mutateAsync({
-                                        schemaSelection: schemaSelected,
-                                        aiServiceSelection: serviceSelected,
-                                        userQuery: userQuery
-                                    });
+                                    if(!skipReviewAndExecute) {
+                                        const formResult = await submitEnglishToSqlMutation.mutateAsync({
+                                            schemaSelection: schemaSelected,
+                                            aiServiceSelection: serviceSelected,
+                                            userQuery: userQuery
+                                        });
+                                        setFormResults(formResult.data);
+                                    }
+                                    else {
+                                        const executeResult = await validateAndExecuteSqlMutation.mutateAsync({
+                                            schemaSelection: schemaSelected,
+                                            aiServiceSelection: serviceSelected,
+                                            userQuery: userQuery
+                                        });
+                                        
+                                        setExecuteResults(executeResult.data)
+                                    }
                                     
-                                    setResults(result.data);
                                 }
                             }}
-                            disabled={!userQuery || submitEnglishToSqlMutation.isPending}
+                            disabled={!userQuery || submitEnglishToSqlMutation.isPending || validateAndExecuteSqlMutation.isPending}
                         >
                             Submit
                         </Button>
                     </div>
                 </GroupBox>
+                <div style={{display: "flex", justifyContent: "flex-end", marginTop: "auto", padding: "10px"}}>
+                    <Checkbox checked={skipReviewAndExecute} onChange={() => setSkipReviewAndExecute(!skipReviewAndExecute)} label="Skip review and execute"/>
+                </div>
             </WindowContent>
-
         </Window>}
-        {!!results && <SubmitEnglishToSqlResults
-            response={results.response}
-            timeTaken={results.timeTaken}
-            tokenCost={results.tokenCost}
-            success={results.success}
-            validationMessage={results.validationMessage}
+        {!!formResults && <SubmitEnglishToSqlResults
+            response={formResults.response}
+            timeTaken={formResults.timeTaken}
+            tokenCost={formResults.tokenCost}
+            success={formResults.success}
+            validationMessage={formResults.validationMessage}
+            restart={restart}
+        />}
+        {!!executeResults && <ExecutedSqlResults 
+            data={executeResults} 
             restart={restart}
         />}
     </>;

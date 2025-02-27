@@ -26,7 +26,7 @@ export const ExecutedSqlResults: FC<ITableProps> = (props) => {
     </>;
 
     return <>
-        <Window style={{ paddingBottom: "10px", display: "flex", flexDirection: "column" }}>
+        <Window style={{ minWidth: 600, paddingBottom: "10px", display: "flex", flexDirection: "column" }}>
             <WindowHeader active>
                 <span role="img" aria-label="database">📊</span> Query Results
             </WindowHeader>

@@ -11,6 +11,7 @@ public class AiTemplatesEndpoints : IEndPointMapper
     {
         endpointRouteBuilder.BuildPath("AiTemplates")
             .MediatePost<SubmitEnglishToSqlRequest, EnglishToSqlDto>("")
-            .MediatePost<ExecuteSqlRequest, List<ExpandoObject>>("/ExecuteSql");
+            .MediatePost<ExecuteSqlRequest, List<ExpandoObject>>("/ExecuteSql")
+            .MediatePost<ValidateAndExecuteSqlRequest, List<ExpandoObject>>("/ValidateAndExecuteSql");
     }
 }

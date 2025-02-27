@@ -5,6 +5,7 @@ using System.Text;
 using Application.Common.Extensions;
 using Application.QueryRunner;
 using Infrastructure.Storage.Persistence.Context;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Services;
@@ -13,8 +14,9 @@ public class QueryRunnerService(AiTemplatesDbContext dbContext) : IQueryRunnerSe
 {
     public async Task<List<ExpandoObject>> RunSqlAsync(string sql)
     {
-        await using var connection = dbContext.Database.GetDbConnection();
-        await EnsureConnectionOpenAsync(connection);
+        var connectionString = dbContext.Database.GetConnectionString();
+        await using var connection = new SqlConnection(connectionString);
+        await connection.OpenAsync();
 
         await using var command = connection.CreateCommand();
         command.CommandText = sql;
@@ -46,6 +48,7 @@ public class QueryRunnerService(AiTemplatesDbContext dbContext) : IQueryRunnerSe
         finally
         {
             await DisableExecutionPlanModeAsync(connection);
+            await connection.CloseAsync();
         }
     }
     

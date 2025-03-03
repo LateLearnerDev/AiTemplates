@@ -1,7 +1,6 @@
 using System.Diagnostics;
-using System.Text.Json;
 using Application.AiTemplates.Dtos;
-using Application.AzureOpenAi.Completions;
+using Application.AzureOpenAi;
 using Application.Common.Enums;
 using Application.Common.Extensions;
 using Application.QueryRunner;
@@ -19,7 +18,7 @@ public class SubmitEnglishToSqlRequest : IRequest<EnglishToSqlDto>
     public string? CustomSchema { get; set; }
 }
 
-public class SubmitEnglishToSqlRequestHandler(ISender sender, IQueryRunnerService queryRunnerService) : IRequestHandler<SubmitEnglishToSqlRequest, EnglishToSqlDto>
+public class SubmitEnglishToSqlRequestHandler(ISender sender, IQueryRunnerService queryRunnerService, IAzureOpenAiClient azureOpenAiClient) : IRequestHandler<SubmitEnglishToSqlRequest, EnglishToSqlDto>
 {
     public async Task<EnglishToSqlDto> Handle(SubmitEnglishToSqlRequest request, CancellationToken cancellationToken)
     {
@@ -68,15 +67,10 @@ public class SubmitEnglishToSqlRequestHandler(ISender sender, IQueryRunnerServic
         var simpleSchema = await sender.Send(new GetSummarizedSchemaRequest());
 
         var stopwatch = Stopwatch.StartNew();
-        var completionRequest = new CreateAzureCompletionRequest
-        {
-            SystemPrompt = GenerateSqlSchemaSystemPrompt(simpleSchema),
-            UserPrompt = request.UserQuery
-        };
-        var result = await sender.Send(completionRequest);
+        var completion = await azureOpenAiClient.GetChatCompletionAsync(GenerateSqlSchemaSystemPrompt(simpleSchema), request.UserQuery);
         stopwatch.Stop();
 
-        var response = result.Content
+        var response = completion.Content
             .FirstOrDefault()
             ?.Text
             .RemoveMarkdownNewLinesAndSpaces() ?? string.Empty;
@@ -85,7 +79,7 @@ public class SubmitEnglishToSqlRequestHandler(ISender sender, IQueryRunnerServic
         return new EnglishToSqlDto
         {
             Response = response,
-            TokenCost = result.Usage.TotalTokenCount,
+            TokenCost = completion.Usage.TotalTokenCount,
             TimeTaken = Math.Round(stopwatch.Elapsed.TotalSeconds, 2),
             Success = queryValidation.Success,
             ValidationMessage = queryValidation.ExexutionPlan

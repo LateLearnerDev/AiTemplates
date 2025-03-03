@@ -1,3 +1,4 @@
+using Application.AzureOpenAi;
 using Application.Common.Interfaces;
 using Application.OpenAi.Assistants.Services;
 using Application.OpenAi.Completions.Services;
@@ -8,6 +9,7 @@ using Application.OpenAiEnglishToSql;
 using Application.QueryRunner;
 using Application.SchemaSummariser.Services;
 using Autofac;
+using Infrastructure.Clients;
 using Infrastructure.Ioc;
 using Infrastructure.Services;
 using Infrastructure.Storage.Persistence.Context;
@@ -44,6 +46,10 @@ public class InfrastructureDependencyModule : DependencyResolvingModule
         
         builder.RegisterType<QueryRunnerService>()
             .As<IQueryRunnerService>()
+            .InstancePerLifetimeScope();
+
+        builder.RegisterType<AzureOpenAiClient>()
+            .As<IAzureOpenAiClient>()
             .InstancePerLifetimeScope();
     }
 }

@@ -1,4 +1,4 @@
 
 export interface IExecuteSqlRequest {
-    userQuery: string
+    sqlQuery: string
 }

@@ -41,7 +41,7 @@ public class OpenAiEnglishToSqlRequestHandler(IThreadService threadService, IMes
             .Select(x => x.Value.RemoveMarkdownNewLinesAndSpaces())
             .ToList();
 
-        var result = await queryRunnerService.RunSqlAsync(cleanedText.First());
+        var result = await queryRunnerService.ExecuteQueryAsync(cleanedText.First());
 
         return cleanedText;
     }

@@ -12,7 +12,7 @@ namespace Infrastructure.Services;
 
 public class QueryRunnerService(AiTemplatesDbContext dbContext) : IQueryRunnerService
 {
-    public async Task<List<ExpandoObject>> RunSqlAsync(string sql)
+    public async Task<List<ExpandoObject>> ExecuteQueryAsync(string sql)
     {
         var connectionString = dbContext.Database.GetConnectionString();
         await using var connection = new SqlConnection(connectionString);

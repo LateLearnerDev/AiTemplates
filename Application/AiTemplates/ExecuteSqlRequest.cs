@@ -13,6 +13,6 @@ public class ExecuteSqlRequestHandler(IQueryRunnerService queryRunnerService) : 
 {
     public async Task<List<ExpandoObject>> Handle(ExecuteSqlRequest request, CancellationToken cancellationToken)
     {
-        return await queryRunnerService.RunSqlAsync(request.SqlQuery);
+        return await queryRunnerService.ExecuteQueryAsync(request.SqlQuery);
     }
 }

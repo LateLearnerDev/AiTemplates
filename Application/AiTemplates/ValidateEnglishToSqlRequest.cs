@@ -10,7 +10,7 @@ using MediatR;
 
 namespace Application.AiTemplates;
 
-public class SubmitEnglishToSqlRequest : IRequest<EnglishToSqlDto>
+public class ValidateEnglishToSqlRequest : IRequest<EnglishToSqlDto>
 {
     public required AiServiceSelection AiServiceSelection { get; set; }
     public required SchemaSelection SchemaSelection { get; set; }
@@ -18,9 +18,9 @@ public class SubmitEnglishToSqlRequest : IRequest<EnglishToSqlDto>
     public string? CustomSchema { get; set; }
 }
 
-public class SubmitEnglishToSqlRequestHandler(ISender sender, IQueryRunnerService queryRunnerService, IAzureOpenAiClient azureOpenAiClient) : IRequestHandler<SubmitEnglishToSqlRequest, EnglishToSqlDto>
+public class ValidateEnglishToSqlRequestHandler(ISender sender, IQueryRunnerService queryRunnerService, IAzureOpenAiClient azureOpenAiClient) : IRequestHandler<ValidateEnglishToSqlRequest, EnglishToSqlDto>
 {
-    public async Task<EnglishToSqlDto> Handle(SubmitEnglishToSqlRequest request, CancellationToken cancellationToken)
+    public async Task<EnglishToSqlDto> Handle(ValidateEnglishToSqlRequest request, CancellationToken cancellationToken)
     {
         Guard.IsNotEmpty(request.UserQuery);
         
@@ -35,7 +35,7 @@ public class SubmitEnglishToSqlRequestHandler(ISender sender, IQueryRunnerServic
         };
     }
     
-    private async Task<EnglishToSqlDto> SelectSchemaAndSubmitAsync(SubmitEnglishToSqlRequest request)
+    private async Task<EnglishToSqlDto> SelectSchemaAndSubmitAsync(ValidateEnglishToSqlRequest request)
     {
         return request.SchemaSelection switch
         {
@@ -62,7 +62,7 @@ public class SubmitEnglishToSqlRequestHandler(ISender sender, IQueryRunnerServic
         };
     }
 
-    private async Task<EnglishToSqlDto> HandleSimpleSchemaAsync(SubmitEnglishToSqlRequest request)
+    private async Task<EnglishToSqlDto> HandleSimpleSchemaAsync(ValidateEnglishToSqlRequest request)
     {
         var simpleSchema = await sender.Send(new GetSummarizedSchemaRequest());
 

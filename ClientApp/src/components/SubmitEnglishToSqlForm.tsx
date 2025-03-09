@@ -2,35 +2,35 @@ import {FC, useState} from "react";
 import {Button, Checkbox, GroupBox, Select, TextInput, Window, WindowContent, WindowHeader} from "react95";
 import {AiServiceSelection} from "../models/enums/AiServiceSelection.ts";
 import {SchemaSelection} from "../models/enums/SchemaSelection.ts";
-import {useEnglishToSqlMutation} from "../data/hooks/useEngilshToSqlQuery.ts";
 import {LoadingBar} from "./global/LoadingBar.tsx";
 import {SubmitEnglishToSqlResults} from "./SubmitEnglishToSqlResults.tsx";
 import {IEnglishToSqlDto} from "../models/IEnglishToSqlDto.ts";
-import {DynamicRow, useValidateAndExecuteSqlMutation} from "../data/hooks/useExecuteSqlQuery.ts";
+import {DynamicRow, useExecuteSqlMutation} from "../data/hooks/useExecuteSqlQuery.ts";
 import {ExecutedSqlResults} from "./ExecutedSqlResults.tsx";
+import {useValidateEnglishToSqlMutation} from "../data/hooks/useValidateEngilshToSqlQuery.ts";
 
 
 export const SubmitEnglishToSqlForm: FC = () => {
     const [serviceSelected, setServiceSelected] = useState<AiServiceSelection>(AiServiceSelection.AZURE_OPENAI_GPT4o_MINI);
     const [schemaSelected, setSchemeSelected] = useState<SchemaSelection>(SchemaSelection.SIMPLE_SCHEMA);
     const [userQuery, setUserQuery] = useState<string>('');
-    const [formResults, setFormResults] = useState<IEnglishToSqlDto>();
+    const [formResults, setValidationResults] = useState<IEnglishToSqlDto>();
     const [executeResults, setExecuteResults] = useState<DynamicRow[]>();
     const [skipReviewAndExecute, setSkipReviewAndExecute] = useState<boolean>(false);
 
-    const submitEnglishToSqlMutation = useEnglishToSqlMutation();
-    const validateAndExecuteSqlMutation = useValidateAndExecuteSqlMutation();
+    const submitEnglishToSqlMutation = useValidateEnglishToSqlMutation();
+    const executeSqlMutation = useExecuteSqlMutation();
 
     const restart = () => {
         setServiceSelected(AiServiceSelection.AZURE_OPENAI_GPT4o_MINI);
         setSchemeSelected(SchemaSelection.SIMPLE_SCHEMA);
         setUserQuery('');
-        setFormResults(undefined);
+        setValidationResults(undefined);
         setExecuteResults(undefined);
     }
 
     return <>
-        {(submitEnglishToSqlMutation.isPending || validateAndExecuteSqlMutation.isPending) && <LoadingBar/>}
+        {(submitEnglishToSqlMutation.isPending || executeSqlMutation.isPending) && <LoadingBar/>}
         {(!formResults && !executeResults) &&
             <Window style={{width: 600, minHeight: 500}}>
                 <WindowHeader>English To Sql</WindowHeader>
@@ -91,24 +91,37 @@ export const SubmitEnglishToSqlForm: FC = () => {
                                 onClick={async () => {
                                     if (!!schemaSelected && !!serviceSelected) {
                                         if (!skipReviewAndExecute) {
-                                            const formResult = await submitEnglishToSqlMutation.mutateAsync({
+                                            const validationResult = await submitEnglishToSqlMutation.mutateAsync({
                                                 schemaSelection: schemaSelected,
                                                 aiServiceSelection: serviceSelected,
                                                 userQuery: userQuery
                                             });
-                                            setFormResults(formResult.data);
+                                            setValidationResults(validationResult.data);
                                         } else {
-                                            const executeResult = await validateAndExecuteSqlMutation.mutateAsync({
+                                            await submitEnglishToSqlMutation.mutateAsync({
                                                 schemaSelection: schemaSelected,
                                                 aiServiceSelection: serviceSelected,
                                                 userQuery: userQuery
+                                            }, {
+                                                onSuccess: async validationResult => {
+                                                    if(validationResult.data.success) {
+                                                        const executionResult = await executeSqlMutation.mutateAsync({
+                                                            sqlQuery: validationResult.data.response
+                                                        });
+                                                        setExecuteResults(executionResult.data);
+                                                    }
+                                                    else {
+                                                        setValidationResults(validationResult.data);
+                                                    }
+                                                }
                                             });
-                                            setExecuteResults(executeResult.data)
+                                            
+                                            
                                         }
 
                                     }
                                 }}
-                                disabled={!userQuery || submitEnglishToSqlMutation.isPending || validateAndExecuteSqlMutation.isPending}
+                                disabled={!userQuery || submitEnglishToSqlMutation.isPending || executeSqlMutation.isPending}
                             >
                                 Submit
                             </Button>

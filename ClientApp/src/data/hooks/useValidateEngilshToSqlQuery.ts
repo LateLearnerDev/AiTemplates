@@ -12,7 +12,7 @@ const submitEnglishToSql = async (request: ISubmitEnglishToSqlRequest) => {
     return await axios.post<IEnglishToSqlDto>(`${API_URL}/AiTemplates`, request);
 }
 
-export const useEnglishToSqlMutation = () => {
+export const useValidateEnglishToSqlMutation = () => {
     const queryClient = useQueryClient();
 
     return useMutation({

@@ -1,4 +1,4 @@
-import {FC, useState} from "react";
+import {FC, useCallback, useState} from "react";
 import {Button, Checkbox, GroupBox, Select, TextInput, Window, WindowContent, WindowHeader} from "react95";
 import {AiServiceSelection} from "../models/enums/AiServiceSelection.ts";
 import {SchemaSelection} from "../models/enums/SchemaSelection.ts";
@@ -21,13 +21,55 @@ export const SubmitEnglishToSqlForm: FC = () => {
     const submitEnglishToSqlMutation = useValidateEnglishToSqlMutation();
     const executeSqlMutation = useExecuteSqlMutation();
 
-    const restart = () => {
+    const restart = useCallback(() => {
         setServiceSelected(AiServiceSelection.AZURE_OPENAI_GPT4o_MINI);
         setSchemeSelected(SchemaSelection.SIMPLE_SCHEMA);
         setUserQuery('');
         setValidationResults(undefined);
         setExecuteResults(undefined);
-    }
+    }, []);
+
+    const handleServiceChange = useCallback((value: number) => {
+        setServiceSelected(value);
+    }, []);
+
+    const handleSchemaChange = useCallback((value: number) => {
+        setSchemeSelected(value);
+    }, []);
+
+    const handleSkipReviewChange = useCallback(() => {
+        setSkipReviewAndExecute(prev => !prev);
+    }, []);
+
+    const handleSubmit = useCallback(async () => {
+        if (!!schemaSelected && !!serviceSelected) {
+            if (!skipReviewAndExecute) {
+                const validationResult = await submitEnglishToSqlMutation.mutateAsync({
+                    schemaSelection: schemaSelected,
+                    aiServiceSelection: serviceSelected,
+                    userQuery: userQuery
+                });
+                setValidationResults(validationResult.data);
+            } else {
+                await submitEnglishToSqlMutation.mutateAsync({
+                    schemaSelection: schemaSelected,
+                    aiServiceSelection: serviceSelected,
+                    userQuery: userQuery
+                }, {
+                    onSuccess: async validationResult => {
+                        if (validationResult.data.success) {
+                            const executionResult = await executeSqlMutation.mutateAsync({
+                                sqlQuery: validationResult.data.response
+                            });
+                            setExecuteResults(executionResult.data);
+                        } else {
+                            setValidationResults(validationResult.data);
+                        }
+                    }
+                });
+            }
+        }
+    }, [executeSqlMutation, schemaSelected, serviceSelected, skipReviewAndExecute, submitEnglishToSqlMutation, userQuery]);
 
     return <>
         {(submitEnglishToSqlMutation.isPending || executeSqlMutation.isPending) && <LoadingBar/>}
@@ -60,7 +102,7 @@ export const SubmitEnglishToSqlForm: FC = () => {
                                     menuMaxHeight={160}
                                     width={250}
                                     onChange={e => {
-                                        setServiceSelected(e.value);
+                                        handleServiceChange(e.value);
                                     }}
                                     onOpen={e => console.log('open', e)}
                                     onClose={e => console.log('close', e)}
@@ -77,7 +119,7 @@ export const SubmitEnglishToSqlForm: FC = () => {
                                     menuMaxHeight={160}
                                     width={250}
                                     onChange={e => {
-                                        setSchemeSelected(e.value);
+                                        handleSchemaChange(e.value);
                                     }}
                                     onOpen={e => console.log('open', e)}
                                     onClose={e => console.log('close', e)}
@@ -88,39 +130,7 @@ export const SubmitEnglishToSqlForm: FC = () => {
                             <Button
                                 style={{width: 150, height: 50}}
                                 primary
-                                onClick={async () => {
-                                    if (!!schemaSelected && !!serviceSelected) {
-                                        if (!skipReviewAndExecute) {
-                                            const validationResult = await submitEnglishToSqlMutation.mutateAsync({
-                                                schemaSelection: schemaSelected,
-                                                aiServiceSelection: serviceSelected,
-                                                userQuery: userQuery
-                                            });
-                                            setValidationResults(validationResult.data);
-                                        } else {
-                                            await submitEnglishToSqlMutation.mutateAsync({
-                                                schemaSelection: schemaSelected,
-                                                aiServiceSelection: serviceSelected,
-                                                userQuery: userQuery
-                                            }, {
-                                                onSuccess: async validationResult => {
-                                                    if(validationResult.data.success) {
-                                                        const executionResult = await executeSqlMutation.mutateAsync({
-                                                            sqlQuery: validationResult.data.response
-                                                        });
-                                                        setExecuteResults(executionResult.data);
-                                                    }
-                                                    else {
-                                                        setValidationResults(validationResult.data);
-                                                    }
-                                                }
-                                            });
-                                            
-                                            
-                                        }
-
-                                    }
-                                }}
+                                onClick={handleSubmit}
                                 disabled={!userQuery || submitEnglishToSqlMutation.isPending || executeSqlMutation.isPending}
                             >
                                 Submit
@@ -129,7 +139,7 @@ export const SubmitEnglishToSqlForm: FC = () => {
                     </GroupBox>
                     <div style={{display: "flex", justifyContent: "flex-end", marginTop: "auto", padding: "10px"}}>
                         <Checkbox checked={skipReviewAndExecute}
-                                  onChange={() => setSkipReviewAndExecute(!skipReviewAndExecute)}
+                                  onChange={handleSkipReviewChange}
                                   label="Skip review and execute"/>
                     </div>
                 </WindowContent>

@@ -2,7 +2,6 @@ using System.Data;
 using System.Data.Common;
 using System.Dynamic;
 using System.Text;
-using Application.Common.Extensions;
 using Application.QueryRunner;
 using Infrastructure.Storage.Persistence.Context;
 using Microsoft.Data.SqlClient;

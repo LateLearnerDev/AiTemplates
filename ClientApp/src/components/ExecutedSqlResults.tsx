@@ -1,4 +1,4 @@
-import {FC} from "react";
+import {FC, memo} from "react";
 import {
     Button, GroupBox,
     Window,
@@ -13,7 +13,7 @@ interface ITableProps {
     restart: () => void;
 }
 
-export const ExecutedSqlResults: FC<ITableProps> = (props) => {
+export const ExecutedSqlResults: FC<ITableProps> = memo((props) => {
     if (props.data.length === 0) return <>
         <Window style={{ width: "80%", margin: "20px auto" }}>
             <WindowHeader active>
@@ -47,4 +47,4 @@ export const ExecutedSqlResults: FC<ITableProps> = (props) => {
             </WindowContent>
         </Window>
     </>;
-}
+});

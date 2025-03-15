@@ -1,4 +1,4 @@
-import {FC, useEffect, useState} from "react";
+import {FC, memo, useState} from "react";
 import {Button, GroupBox, Tab, TabBody, Tabs, TextInput, Window, WindowContent, WindowHeader} from "react95";
 import {DynamicRow, useExecuteSqlMutation} from "../data/hooks/useExecuteSqlQuery.ts";
 import {LoadingBar} from "./global/LoadingBar.tsx";
@@ -19,12 +19,12 @@ enum TabSelection
     VALIDATION_INFO = 2
 }
 
-export const SubmitEnglishToSqlResults: FC<ISubmitEnglishToSqlResultsProps> = (props) => {
+export const SubmitEnglishToSqlResults: FC<ISubmitEnglishToSqlResultsProps> = memo((props) => {
     const [aiResponse, setAiResponse] = useState<string>(props.response);
     const [executedSqlResults, setExecutedSqlResults] = useState<DynamicRow[]>();
     const [selectedTab, setSelectedTab] = useState<TabSelection>(TabSelection.MAIN);
 
-    const handleChange = (
+    const handleTabChange = (
         value: number
     ) => {
         setSelectedTab(value);
@@ -32,21 +32,13 @@ export const SubmitEnglishToSqlResults: FC<ISubmitEnglishToSqlResultsProps> = (p
 
     const executeSqlMutation = useExecuteSqlMutation();
 
-    useEffect(() => {
-        console.log({props: props});
-    }, [props]);
-
-    useEffect(() => {
-        console.log({results: executedSqlResults});
-    }, [executedSqlResults]);
-
     return <>
         {executeSqlMutation.isPending && <LoadingBar loadingText={`Executing`}/>}
         {!executedSqlResults &&
             <Window style={{width: 600, minHeight: 650, position: 'relative', paddingBottom: '50px'}}>
                 <WindowHeader>Ai Response</WindowHeader>
                 <WindowContent>
-                    <Tabs value={selectedTab} onChange={handleChange}>
+                    <Tabs value={selectedTab} onChange={handleTabChange}>
                         <Tab value={TabSelection.MAIN}>Main</Tab>
                         <Tab value={TabSelection.VALIDATION_INFO}>Validation Info</Tab>
                     </Tabs>
@@ -135,4 +127,4 @@ export const SubmitEnglishToSqlResults: FC<ISubmitEnglishToSqlResultsProps> = (p
             }}
         />}
     </>;
-}
+});

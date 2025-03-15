@@ -29,17 +29,17 @@ export const SubmitEnglishToSqlForm: FC = () => {
         setExecuteResults(undefined);
     }, []);
 
-    const handleServiceChange = useCallback((value: number) => {
+    const handleServiceChange = (value: number) => {
         setServiceSelected(value);
-    }, []);
+    };
 
-    const handleSchemaChange = useCallback((value: number) => {
+    const handleSchemaChange = (value: number) => {
         setSchemeSelected(value);
-    }, []);
+    };
 
-    const handleSkipReviewChange = useCallback(() => {
+    const handleSkipReviewChange = () => {
         setSkipReviewAndExecute(prev => !prev);
-    }, []);
+    };
 
     const handleSubmit = useCallback(async () => {
         if (!!schemaSelected && !!serviceSelected) {
@@ -51,22 +51,19 @@ export const SubmitEnglishToSqlForm: FC = () => {
                 });
                 setValidationResults(validationResult.data);
             } else {
-                await submitEnglishToSqlMutation.mutateAsync({
+                const validationResult = (await submitEnglishToSqlMutation.mutateAsync({
                     schemaSelection: schemaSelected,
                     aiServiceSelection: serviceSelected,
                     userQuery: userQuery
-                }, {
-                    onSuccess: async validationResult => {
-                        if (validationResult.data.success) {
-                            const executionResult = await executeSqlMutation.mutateAsync({
-                                sqlQuery: validationResult.data.response
-                            });
-                            setExecuteResults(executionResult.data);
-                        } else {
-                            setValidationResults(validationResult.data);
-                        }
-                    }
-                });
+                }))?.data;
+                if (validationResult.success) {
+                    const executionResult = (await executeSqlMutation.mutateAsync({
+                        sqlQuery: validationResult.response
+                    }))?.data;
+                    setExecuteResults(executionResult);
+                } else {
+                    setValidationResults(validationResult);
+                }
             }
         }
     }, [executeSqlMutation, schemaSelected, serviceSelected, skipReviewAndExecute, submitEnglishToSqlMutation, userQuery]);

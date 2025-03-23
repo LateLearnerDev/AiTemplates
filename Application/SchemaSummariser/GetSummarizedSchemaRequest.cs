@@ -10,8 +10,8 @@ public class GetSummarizedSchemaRequest : IRequest<string>
 
 public class GetSummarizedSchemaRequestHandler(ISchemaSummariserService service) : IRequestHandler<GetSummarizedSchemaRequest, string>
 {
-    public Task<string> Handle(GetSummarizedSchemaRequest request, CancellationToken cancellationToken)
+    public async Task<string> Handle(GetSummarizedSchemaRequest request, CancellationToken cancellationToken)
     {
-        return Task.FromResult(service.GetSummarizedSchema());
+        return await service.GetSqlServerSummarizedSchemaAsync();
     }
 }

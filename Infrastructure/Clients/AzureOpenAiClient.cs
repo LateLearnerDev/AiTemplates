@@ -17,7 +17,7 @@ public class AzureOpenAiClient : IAzureOpenAiClient
         _azureOpenAiClient = new AzureOpenAIClient(new Uri(endpoint!), new ApiKeyCredential(key!));
     }
 
-    public async Task<ChatCompletion> GetChatCompletionAsync(string systemPrompt, string userPrompt)
+    public async Task<ChatCompletion> GetChatCompletionAsync(string systemPrompt, string userPrompt, int maxTokens = 1000)
     {
         var completionClient = _azureOpenAiClient.GetChatClient("gpt-4o-mini");
 
@@ -29,8 +29,8 @@ public class AzureOpenAiClient : IAzureOpenAiClient
 
         var response = await completionClient.CompleteChatAsync(chatMessages, new ChatCompletionOptions
         {
-            Temperature = 0.5f,
-            MaxOutputTokenCount = 800
+            Temperature = 0.3f,
+            MaxOutputTokenCount = maxTokens
         });
 
         return response.Value;

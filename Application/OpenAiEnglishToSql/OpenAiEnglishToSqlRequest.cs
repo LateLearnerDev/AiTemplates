@@ -21,7 +21,7 @@ public class OpenAiEnglishToSqlRequestHandler(IThreadService threadService, IMes
 {
     public async Task<List<string>> Handle(OpenAiEnglishToSqlRequest request, CancellationToken cancellationToken)
     {
-        var schema = schemaSummariserService.GetSummarizedSchema();
+        var schema = schemaSummariserService.GetEfSummarizedSchema();
         // Todo: Change these to use the already made mediatr requests instead
         var assistant = await assistantService.CreateAssistantAsync("English to SQL Assistant", "Translates English to SQL",
             $"Assistant that converts english to sql upon user request with the following schema: {schema}. Only ever return the sql unless you don't understand the request. Please also add double quotes to all table and column names");

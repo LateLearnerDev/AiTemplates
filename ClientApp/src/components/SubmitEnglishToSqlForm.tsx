@@ -9,6 +9,16 @@ import {DynamicRow, useExecuteSqlMutation} from "../data/hooks/useExecuteSqlQuer
 import {ExecutedSqlResults} from "./ExecutedSqlResults.tsx";
 import {useValidateEnglishToSqlMutation} from "../data/hooks/useValidateEngilshToSqlQuery.ts";
 
+const SERVICE_OPTIONS = [
+    { label: "Azure OpenAi Gpt 4o-Mini", value: AiServiceSelection.AZURE_OPENAI_GPT4o_MINI },
+    { label: "LocallyHosted (WIP)", value: AiServiceSelection.LOCALLY_HOSTED }
+];
+
+const SCHEMA_OPTIONS = [
+    { label: "Simple Schema", value: SchemaSelection.SIMPLE_SCHEMA },
+    { label: "Complex Schema (WIP)", value: SchemaSelection.COMPLEX_SCHEMA },
+    { label: "Custom Schema (WIP)", value: SchemaSelection.CUSTOM_SCHEMA }
+];
 
 export const SubmitEnglishToSqlForm: FC = () => {
     const [serviceSelected, setServiceSelected] = useState<AiServiceSelection>(AiServiceSelection.AZURE_OPENAI_GPT4o_MINI);
@@ -67,7 +77,7 @@ export const SubmitEnglishToSqlForm: FC = () => {
             }
         }
     }, [executeSqlMutation, schemaSelected, serviceSelected, skipReviewAndExecute, submitEnglishToSqlMutation, userQuery]);
-
+    
     return <>
         {(submitEnglishToSqlMutation.isPending || executeSqlMutation.isPending) && <LoadingBar/>}
         {(!formResults && !executeResults) &&
@@ -89,13 +99,7 @@ export const SubmitEnglishToSqlForm: FC = () => {
                             <div style={{display: 'flex', flexDirection: 'column', gap: '10px'}}>
                                 <Select
                                     defaultValue={1}
-                                    options={[
-                                        {
-                                            label: 'Azure OpenAi Gpt 4o-Mini',
-                                            value: AiServiceSelection.AZURE_OPENAI_GPT4o_MINI
-                                        },
-                                        {label: 'LocallyHosted (WIP)', value: AiServiceSelection.LOCALLY_HOSTED}
-                                    ]}
+                                    options={SERVICE_OPTIONS}
                                     menuMaxHeight={160}
                                     width={250}
                                     onChange={e => {
@@ -108,11 +112,7 @@ export const SubmitEnglishToSqlForm: FC = () => {
                                 />
                                 <Select
                                     defaultValue={1}
-                                    options={[
-                                        {label: 'Simple Schema', value: SchemaSelection.SIMPLE_SCHEMA},
-                                        {label: 'Complex Schema (WIP)', value: SchemaSelection.COMPLEX_SCHEMA},
-                                        {label: 'Custom Schema(WIP)', value: SchemaSelection.CUSTOM_SCHEMA}
-                                    ]}
+                                    options={SCHEMA_OPTIONS}
                                     menuMaxHeight={160}
                                     width={250}
                                     onChange={e => {

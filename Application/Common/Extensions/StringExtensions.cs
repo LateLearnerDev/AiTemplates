@@ -8,7 +8,7 @@ public static partial class StringExtensions
             return string.Empty;
 
         // Remove ```sql and ``` markers, and normalize spaces
-        string cleanedSql = MarkdownNewLinesAndSpacesRegex().Replace(rawSql, " ")
+        var cleanedSql = MarkdownNewLinesAndSpacesRegex().Replace(rawSql, " ")
             .Trim();
 
         return cleanedSql;

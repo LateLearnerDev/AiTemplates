@@ -23,7 +23,7 @@ public class QueryRunnerService(AiTemplatesDbContext dbContext) : IQueryRunnerSe
         return await FetchQueryResultsAsync(command);
     }
 
-    public async Task<(string, bool)> ValidateQueryAsync(string sql)
+    public async Task<(string, bool)> ValidateSqlQueryAsync(string sql)
     {
         if (!sql.StartsWith("SELECT", StringComparison.OrdinalIgnoreCase))
         {
@@ -48,14 +48,6 @@ public class QueryRunnerService(AiTemplatesDbContext dbContext) : IQueryRunnerSe
         {
             await DisableExecutionPlanModeAsync(connection);
             await connection.CloseAsync();
-        }
-    }
-    
-    private static async Task EnsureConnectionOpenAsync(DbConnection connection)
-    {
-        if (connection.State != ConnectionState.Open)
-        {
-            await connection.OpenAsync();
         }
     }
     

@@ -2,5 +2,6 @@ namespace Application.SchemaSummariser.Services;
 
 public interface ISchemaSummariserService
 {
-    string GetSummarizedSchema();
+    string GetEfSummarizedSchema();
+    Task<string> GetSqlServerSummarizedSchemaAsync();
 }
